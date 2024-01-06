@@ -1,9 +1,9 @@
 # MLOps Project Description
 
 ## Group 75
-Mike Auer (s232050)
-Malgorzata Korona (s223322)
-Samy Haffoudhi (s222887)
+Mike Auer (s232050) \
+Malgorzata Korona (s223322) \
+Samy Haffoudhi (s222887) \
 Mateusz Baldachowski (s230241)
 
 ## Overall goal of the project
