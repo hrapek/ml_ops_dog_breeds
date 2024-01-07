@@ -9,6 +9,7 @@ import joblib
 
 # TODO logging
 # TODO check transformations
+# TODO check PEP8
 
 def read_labels(filepath: str) -> Dict[str, str]:
     """Read the (image, labels) tuples from the csv file into a dictionary."""
