@@ -4,6 +4,8 @@ import torch
 from torch.utils.data import DataLoader
 from torchvision import transforms
 from dataset import DogBreedDataset
+from sklearn.preprocessing import LabelEncoder
+import joblib
 
 # TODO logging
 # TODO check transformations
@@ -22,13 +24,16 @@ def read_labels(filepath: str) -> Dict[str, str]:
 if __name__ == '__main__':
     labels = read_labels('data/raw/labels.csv')
 
+    label_encoder = LabelEncoder()
+    label_encoder.fit(list(labels.values()))
+
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
         # transforms.CenterCrop(224),
         transforms.ToTensor()
     ])
 
-    dataset = DogBreedDataset(labels, 'data/raw/train/', transform=transform)
+    dataset = DogBreedDataset(labels, 'data/raw/train/', label_encoder=label_encoder, transform=transform)
 
     batch_size = 32
     data_loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
@@ -44,3 +49,4 @@ if __name__ == '__main__':
 
     torch.save(all_images, 'data/processed/images.pt')
     torch.save(all_labels, 'data/processed/labels.pt')
+    joblib.dump(label_encoder, 'data/processed/label_encoder.pkl')
