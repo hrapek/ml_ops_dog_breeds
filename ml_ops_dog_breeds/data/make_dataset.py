@@ -7,7 +7,6 @@ from dataset import DogBreedDataset
 
 # TODO logging
 # TODO check transformations
-# TODO handle labels
 
 def read_labels(filepath: str) -> Dict[str, str]:
     """Read the (image, labels) tuples from the csv file into a dictionary."""
@@ -21,7 +20,6 @@ def read_labels(filepath: str) -> Dict[str, str]:
 
 
 if __name__ == '__main__':
-    # Get the data and process it
     labels = read_labels('data/raw/labels.csv')
 
     transform = transforms.Compose([
@@ -36,7 +34,13 @@ if __name__ == '__main__':
     data_loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
     all_images = []
+    all_labels = []
     for images, labels in data_loader:
         all_images.append(images)
+        all_labels.append(labels)
+
+    all_images = torch.cat(all_images)
+    all_labels = torch.cat(all_labels)
 
     torch.save(all_images, 'data/processed/images.pt')
+    torch.save(all_labels, 'data/processed/labels.pt')
