@@ -3,6 +3,9 @@ import torch
 from torch import nn
 from torch.utils.data import TensorDataset
 
+# TODO logging
+# TODO check pep8
+
 NUM_CLASSES = 120
 BATCH_SIZE = 32 # TODO config
 LEARNING_RATE = 0.001 # TODO config
