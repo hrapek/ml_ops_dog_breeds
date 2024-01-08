@@ -7,7 +7,7 @@ from sklearn.preprocessing import LabelEncoder
 # TODO check PEP8
 
 class DogBreedDataset(Dataset):
-    """Dog breed dataset."""
+    """Dog breed dataset used for applying transformations to the raw data and saving it."""
 
     def __init__(self, labels: Dict[str, str], root_dir: str, label_encoder=None, transform=None):
         self.labels = labels
