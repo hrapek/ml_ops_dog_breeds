@@ -39,15 +39,29 @@ if __name__ == '__main__':
     batch_size = 32
     data_loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
+    # apply the transformations and load the data into memory
     all_images = []
     all_labels = []
     for images, labels in data_loader:
         all_images.append(images)
         all_labels.append(labels)
-
     all_images = torch.cat(all_images)
     all_labels = torch.cat(all_labels)
 
-    torch.save(all_images, 'data/processed/images.pt')
-    torch.save(all_labels, 'data/processed/labels.pt')
+    # split into train and test
+    split_ratio = 0.8
+    split_index = int(split_ratio * len(dataset))
+    indices = torch.randperm(len(dataset))
+    train_indices = indices[:split_index]
+    test_indices = indices[split_index:]
+    images_train = all_images[train_indices]
+    labels_train = all_labels[train_indices]
+    images_test = all_images[test_indices]
+    labels_test = all_labels[test_indices]
+
+    # save the data
+    torch.save(images_train, 'data/processed/images_train.pt')
+    torch.save(labels_train, 'data/processed/labels_train.pt')
+    torch.save(images_test, 'data/processed/images_test.pt')
+    torch.save(labels_test, 'data/processed/labels_test.pt')
     joblib.dump(label_encoder, 'data/processed/label_encoder.pkl')
