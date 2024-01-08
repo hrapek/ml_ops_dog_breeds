@@ -49,7 +49,7 @@ if __name__ == '__main__':
     all_labels = torch.cat(all_labels)
 
     # split into train and test
-    split_ratio = 0.8
+    split_ratio = 0.8 # TODO config
     split_index = int(split_ratio * len(dataset))
     indices = torch.randperm(len(dataset))
     train_indices = indices[:split_index]
