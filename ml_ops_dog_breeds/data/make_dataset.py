@@ -34,7 +34,7 @@ if __name__ == '__main__':
         transforms.ToTensor()
     ])
 
-    dataset = DogBreedDataset(labels, 'data/raw/train/', label_encoder=label_encoder, transform=transform)
+    dataset = DogBreedDataset(labels, 'data/raw/images/', label_encoder=label_encoder, transform=transform)
 
     batch_size = 32
     data_loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
