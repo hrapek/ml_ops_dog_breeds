@@ -12,6 +12,7 @@ from omegaconf import OmegaConf
 # TODO logging
 # TODO check transformations
 # TODO check pep8
+# TODO load config using hydra
 
 def read_labels(filepath: str) -> Dict[str, str]:
     """Read the (image, labels) tuples from the csv file into a dictionary."""

@@ -7,6 +7,7 @@ from omegaconf import OmegaConf
 
 # TODO logging
 # TODO check pep8
+# TODO load config using hydra
 
 NUM_CLASSES = 120
 
