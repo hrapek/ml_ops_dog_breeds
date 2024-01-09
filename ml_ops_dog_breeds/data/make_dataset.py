@@ -1,3 +1,4 @@
+import os
 from typing import Dict
 import csv
 import torch
@@ -6,6 +7,7 @@ from torchvision import transforms
 from dataset import DogBreedDataset
 from sklearn.preprocessing import LabelEncoder
 import joblib
+from omegaconf import OmegaConf
 
 # TODO logging
 # TODO check transformations
@@ -23,6 +25,10 @@ def read_labels(filepath: str) -> Dict[str, str]:
 
 
 if __name__ == '__main__':
+    script_dir = os.path.dirname(__file__)
+    config_path = os.path.join(script_dir, 'config.yaml')
+    config = OmegaConf.load(config_path)
+
     labels = read_labels('data/raw/labels.csv')
 
     label_encoder = LabelEncoder()
@@ -36,7 +42,7 @@ if __name__ == '__main__':
 
     dataset = DogBreedDataset(labels, 'data/raw/images/', label_encoder=label_encoder, transform=transform)
 
-    batch_size = 32
+    batch_size = config.data.batch_size
     data_loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
     # apply the transformations and load the data into memory
@@ -49,7 +55,7 @@ if __name__ == '__main__':
     all_labels = torch.cat(all_labels)
 
     # split into train and test
-    split_ratio = 0.8 # TODO config
+    split_ratio = config.data.split_ratio
     split_index = int(split_ratio * len(dataset))
     indices = torch.randperm(len(dataset))
     train_indices = indices[:split_index]
