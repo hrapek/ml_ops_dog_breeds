@@ -1,0 +1,3 @@
+hyperparameters:
+  model_type: "resnet18"
+  out_features: 256

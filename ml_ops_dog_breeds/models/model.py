@@ -11,16 +11,20 @@ class MyNeuralNet(LightningModule):
         out_features: number of output features
     
     """
-    def __init__(self, out_features: int) -> None:
+    def __init__(self, model_type: str, out_features: int, lr: float) -> None:
         super().__init__()
 
-        self.base_model = timm.create_model("resnet18", pretrained=True)
+        self.model_type = model_type
+        self.out_features = out_features
+        self.lr = lr
+
+        self.base_model = timm.create_model(self.model_type, pretrained=True)
 
         self.base_model.fc = nn.Sequential(
             nn.Linear(self.base_model.fc.in_features, 256),  # Additional linear layer with 256 output features
             nn.ReLU(inplace=True),         # Activation function (you can choose other activation functions too)
             nn.Dropout(0.5),               # Dropout layer with 50% probability
-            nn.Linear(256, out_features)    # Final prediction fc layer
+            nn.Linear(256, self.out_features)    # Final prediction fc layer
         )
 
         self.criterium = nn.CrossEntropyLoss()
@@ -47,7 +51,7 @@ class MyNeuralNet(LightningModule):
         return loss
     
     def configure_optimizer(self):
-        return optim.Adam(self.parameters(), lr=1e-2)
+        return optim.Adam(self.parameters(), lr=self.lr)
     
     def test_step(self, batch):
         images, labels = batch
