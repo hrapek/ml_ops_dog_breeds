@@ -4,6 +4,7 @@ import torch
 from torch import nn
 from torch.utils.data import TensorDataset
 from omegaconf import OmegaConf
+from ml_ops_dog_breeds.models.model import MyNeuralNet
 
 # TODO logging
 # TODO check pep8
@@ -43,7 +44,7 @@ if __name__ == '__main__':
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    model = create_model('resnet50', num_classes=NUM_CLASSES).to(device)
+    model = MyNeuralNet(out_features=120)
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
