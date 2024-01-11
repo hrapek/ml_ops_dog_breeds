@@ -3,5 +3,5 @@
 ['remote "storage"']
     url = gdrive://1HJg8tM5Mk3ND-W3Gbx9w-3tMl7-OgPbj
 ['remote "remote_storage"']
-    url = gs://dog_breeds_data_bucket/
+    url = gs://ml_ops_group_75_data_bucket/
     version_aware = true
