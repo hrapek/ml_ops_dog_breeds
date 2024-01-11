@@ -1,1 +1,5 @@
 ml_ops_dog_breeds.egg-info
+__pycache__
+.echo.swp
+.GPU.swp
+.Computing.swp

@@ -1,17 +1,21 @@
-import torch
+from pytorch_lightning import Trainer
+from data.make_dataset import DogBreedsDataModule
+from models.model import MyNeuralNet
 
-def predict(
-    model: torch.nn.Module,
-    dataloader: torch.utils.data.DataLoader
-) -> None:
-    """Run prediction for a given model and dataloader.
-    
-    Args:
-        model: model to use for prediction
-        dataloader: dataloader with batches
-    
-    Returns
-        Tensor of shape [N, d] where N is the number of samples and d is the output dimension of the model
+# TODO: figure out how to load models, lighting saves model checkpoint but with weird names (how to make it easier?)
 
-    """
-    return torch.cat([model(batch) for batch in dataloader], 0)
+# data
+data = DogBreedsDataModule()
+
+# checkpoint location
+checkpoint_name = 'model.pt'
+checkpoint_path = f'models/{checkpoint_name}'
+
+# model abd trainer
+model = MyNeuralNet.load_from_checkpoint(checkpoint_path)  # LightningModule
+trainer = Trainer()
+
+test_dataloader = data.test_dataloader()
+
+if __name__ == '__main__':
+    trainer.test(model, test_dataloader)
