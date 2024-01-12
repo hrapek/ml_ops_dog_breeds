@@ -4,4 +4,3 @@ __pycache__
 .GPU.swp
 .Computing.swp
 build
-.github/workflows/codecheck.yml
