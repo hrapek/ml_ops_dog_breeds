@@ -35,10 +35,19 @@ class DogBreedsDataModule(LightningDataModule):
         # load data
         # TODO: add part for loading and splitting data
 
-        # normalize
-        # TODO: add normalization
+        # calulate mean and sd
+        mean_train, std_train = torch.mean(x_train), torch.std(x_train)
+        mean_val, std_val = torch.mean(x_val), torch.std(x_val)
+        mean_test, std_test = torch.mean(x_test), torch.std(x_test)
 
-        return 'Empty function' # TODO: return torch.utils.data.TensorDataset for train, val, test
+        # normalize
+        x_train = (x_train - mean_train) / std_train
+        x_val = (x_val - mean_val) / std_val
+        x_test = (x_test - mean_test) / std_test
+
+        return (torch.utils.data.TensorDataset(x_train, y_train), 
+                torch.utils.data.TensorDataset(x_val, y_val), 
+                torch.utils.data.TensorDataset(x_test, y_test))
 
     def train_dataloader(self, batch_size):
         train = torch.load(f'{self.save_path}/train_data.pt')
