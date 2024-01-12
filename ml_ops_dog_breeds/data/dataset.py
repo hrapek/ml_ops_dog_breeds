@@ -6,6 +6,7 @@ from sklearn.preprocessing import LabelEncoder
 # TODO docstrings
 # TODO check PEP8
 
+
 class DogBreedDataset(Dataset):
     """Dog breed dataset used for applying transformations to the raw data and saving it."""
 

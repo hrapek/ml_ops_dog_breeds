@@ -1,19 +1,11 @@
-import os
-from typing import Dict
-import csv
 import torch
-from torch.utils.data import DataLoader
-from torchvision import transforms
-from dataset import DogBreedDataset
-from sklearn.preprocessing import LabelEncoder
-import joblib
-from omegaconf import OmegaConf
 from pytorch_lightning import LightningDataModule
 
 
 # TODO: check transformations
 # TODO: check pep8
 # TODO: fill process_data once we make data work
+
 
 class DogBreedsDataModule(LightningDataModule):
     def __init__(self, load_path: str = 'data/raw/', save_path: str = 'data/processed/', num_workers: int = 1) -> None:
@@ -45,14 +37,16 @@ class DogBreedsDataModule(LightningDataModule):
         x_val = (x_val - mean_val) / std_val
         x_test = (x_test - mean_test) / std_test
 
-        return (torch.utils.data.TensorDataset(x_train, y_train), 
-                torch.utils.data.TensorDataset(x_val, y_val), 
-                torch.utils.data.TensorDataset(x_test, y_test))
+        return (
+            torch.utils.data.TensorDataset(x_train, y_train),
+            torch.utils.data.TensorDataset(x_val, y_val),
+            torch.utils.data.TensorDataset(x_test, y_test),
+        )
 
     def train_dataloader(self, batch_size):
         train = torch.load(f'{self.save_path}/train_data.pt')
         return torch.utils.data.DataLoader(train, batch_size=batch_size, shuffle=True, num_workers=self.num_workers)
-    
+
     def val_dataloader(self, batch_size):
         val = torch.load(f'{self.save_path}/val_data.pt')
         return torch.utils.data.DataLoader(val, batch_size=batch_size, shuffle=True, num_workers=self.num_workers)
@@ -61,10 +55,9 @@ class DogBreedsDataModule(LightningDataModule):
         test = torch.load(f'{self.save_path}/test_data.pt')
         return torch.utils.data.DataLoader(test, batch_size=batch_size, num_workers=self.num_workers)
 
+
 if __name__ == '__main__':
     DogBreedsDataModule().setup()
-
-
 
 
 # def read_labels(filepath: str) -> Dict[str, str]:

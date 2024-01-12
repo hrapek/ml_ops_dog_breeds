@@ -1,8 +1,3 @@
-import os
-from timm import create_model
-import torch
-from torch import nn
-from torch.utils.data import TensorDataset
 from omegaconf import OmegaConf
 from ml_ops_dog_breeds.models.model import MyNeuralNet
 from pytorch_lightning.callbacks import ModelCheckpoint
@@ -20,9 +15,11 @@ trainer_config = OmegaConf.load('config.yaml')
 data = DogBreedsDataModule(trainer_config.hyperparameters.num_workers)
 
 # model class
-model = MyNeuralNet(model_type = model_config.hyperparameters.model_type, 
-                    out_features = model_config.hyperparameters.out_features, 
-                    lr = trainer_config.hyperparameters.lr)
+model = MyNeuralNet(
+    model_type=model_config.hyperparameters.model_type,
+    out_features=model_config.hyperparameters.out_features,
+    lr=trainer_config.hyperparameters.lr,
+)
 
 # monitor model checkpoints
 checkpoint_callback = ModelCheckpoint(dirpath='./models', monitor='val_loss', mode='min')
@@ -33,7 +30,10 @@ val_dataloader = data.val_dataloader(batch_size=trainer_config.hyperparameters.b
 
 # trainer with wandb logger
 trainer = Trainer(
-    accelerator=trainer_config.hyperparameters.device, max_epochs=trainer_config.hyperparameters.n_epochs, callbacks=[checkpoint_callback], logger=WandbLogger(project='ml_ops_dog_breeds')
+    accelerator=trainer_config.hyperparameters.device,
+    max_epochs=trainer_config.hyperparameters.n_epochs,
+    callbacks=[checkpoint_callback],
+    logger=WandbLogger(project='ml_ops_dog_breeds'),
 )
 
 if __name__ == '__main__':
