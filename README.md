@@ -79,3 +79,10 @@ The directory structure of the project looks like this:
 Created using [mlops_template](https://github.com/SkafteNicki/mlops_template),
 a [cookiecutter template](https://github.com/cookiecutter/cookiecutter) for getting
 started with Machine Learning Operations (MLOps).
+
+## Dockerfile
+
+In order to run Dockerfiles in this project, you need to create an account on [wandb](https://wandb.ai/home) and create an API key. Then, to run a built Docker image, run a command:
+```
+docker run -e WANDB_API_KEY=<your-api-key> image_name:tag_name
+```

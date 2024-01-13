@@ -11,7 +11,7 @@ COPY ml_ops_dog_breeds/ ml_ops_dog_breeds/
 COPY data/ data/
 
 WORKDIR /
-RUN pip install -r requirements.txt --no-cache-dir
+RUN --mount=type=cache,target=~/pip/.cache pip install -r requirements.txt --no-cache-dir
 RUN pip install . --no-deps --no-cache-dir
 
 ENTRYPOINT ["python", "-u", "ml_ops_dog_breeds/predict_model.py"]
