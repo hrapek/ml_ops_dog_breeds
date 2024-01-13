@@ -1,5 +1,5 @@
 from pytorch_lightning import Trainer
-from data.make_dataset import DogBreedsDataModule
+from data.dataset import DogBreedsDataModule
 from models.model import MyNeuralNet
 
 # TODO: figure out how to load models, lighting saves model checkpoint but with weird names (how to make it easier?)

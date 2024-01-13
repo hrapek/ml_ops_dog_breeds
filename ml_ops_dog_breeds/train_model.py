@@ -1,7 +1,7 @@
 from omegaconf import OmegaConf
 from ml_ops_dog_breeds.models.model import MyNeuralNet
 from pytorch_lightning.callbacks import ModelCheckpoint
-from data.make_dataset import DogBreedsDataModule
+from data.dataset import DogBreedsDataModule
 from pytorch_lightning import Trainer
 from pytorch_lightning.loggers import WandbLogger
 
