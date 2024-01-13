@@ -3,6 +3,7 @@ import timm
 from torch import nn, optim
 from pytorch_lightning import LightningModule
 
+# TODO add validation_step()
 
 class MyNeuralNet(LightningModule):
     """Basic neural network class.
@@ -46,13 +47,13 @@ class MyNeuralNet(LightningModule):
     def training_step(self, batch):
         images, labels = batch
         preds = self(images)
-        loss = self.criterium(preds, labels)
+        loss = self.criterium(preds, labels.long())
         acc = (labels == preds.argmax(dim=-1)).float().mean()
         self.log('train_loss', loss)
         self.log('train_acc', acc)
         return loss
 
-    def configure_optimizer(self):
+    def configure_optimizers(self):
         return optim.Adam(self.parameters(), lr=self.lr)
 
     def test_step(self, batch):

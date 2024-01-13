@@ -4,3 +4,4 @@ __pycache__
 .GPU.swp
 .Computing.swp
 build
+wandb
