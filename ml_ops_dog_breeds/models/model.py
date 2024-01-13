@@ -16,6 +16,7 @@ class MyNeuralNet(LightningModule):
 
     def __init__(self, model_type: str, out_features: int, lr: float) -> None:
         super().__init__()
+        self.save_hyperparameters()
 
         self.model_type = model_type
         self.out_features = out_features
@@ -59,7 +60,7 @@ class MyNeuralNet(LightningModule):
     def test_step(self, batch):
         images, labels = batch
         preds = self(images)
-        loss = self.criterium(preds, labels)
+        loss = self.criterium(preds, labels.long())
         acc = (labels == preds.argmax(dim=-1)).float().mean()
         metrics = {'test_acc': acc, 'test_loss': loss}
         self.log_dict(metrics)

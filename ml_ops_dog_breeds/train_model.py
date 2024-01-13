@@ -22,7 +22,7 @@ model = MyNeuralNet(
 )
 
 # monitor model checkpoints
-checkpoint_callback = ModelCheckpoint(dirpath='./models', monitor='val_loss', mode='min')
+checkpoint_callback = ModelCheckpoint(dirpath='./models', monitor='train_loss', mode='min')
 
 # train, val datasets
 train_dataloader = data.train_dataloader(batch_size=trainer_config.hyperparameters.batch_size)

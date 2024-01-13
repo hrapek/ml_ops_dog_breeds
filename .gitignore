@@ -5,3 +5,4 @@ __pycache__
 .Computing.swp
 build
 wandb
+lightning_logs
