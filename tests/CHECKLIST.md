@@ -24,7 +24,7 @@ Please note that all the lists are exhaustive meaning that I do not expect you t
 
 ### Week 2
 
-- [ ] Write unit tests related to the data part of your code
+- [X] Write unit tests related to the data part of your code
 - [ ] Write unit tests related to model construction and or model training
 - [X] Calculate the coverage.
 - [X] Get some continuous integration running on the github repository
