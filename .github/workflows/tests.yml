@@ -45,6 +45,9 @@ jobs:
     - name: Pull remote data
       run: |
         pip install dvc
+        pip install -U pip
+        pip install "dvc[gdrive]"
+        pip install "dvc[all]"
         # dvc remote add -d remote_storage gs://ml_ops_group_75_data_bucket/
         dvc pull
 
