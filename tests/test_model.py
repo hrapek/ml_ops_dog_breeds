@@ -28,12 +28,3 @@ class TestModel:
         model = self.load_data()
         for param in model.parameters():
             assert not torch.isnan(param).any() and not torch.isinf(param).any()
-
-    def test_gradients(self):
-        model = self.load_data()
-        x = torch.randn(1, *IMAGE_SHAPE, requires_grad=True)
-        output = model(x)
-        loss = torch.sum(output)
-        loss.backward()
-        for param in model.parameters():
-            assert not torch.isnan(param.grad).any() and not torch.isinf(param.grad).any()

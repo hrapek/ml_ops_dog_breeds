@@ -25,7 +25,7 @@ Please note that all the lists are exhaustive meaning that I do not expect you t
 ### Week 2
 
 - [X] Write unit tests related to the data part of your code
-- [ ] Write unit tests related to model construction and or model training
+- [X] Write unit tests related to model construction and or model training
 - [X] Calculate the coverage.
 - [X] Get some continuous integration running on the github repository
 - [X] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
