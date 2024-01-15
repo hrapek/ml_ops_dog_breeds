@@ -65,7 +65,6 @@ jobs:
       if: steps.dvc-cache.outputs.cache-hit != 'true'
       run: |
         # dvc remote add -d remote_storage gs://ml_ops_group_75_data_bucket/
-        # test if 'Data and pipelines are up to date.'
         dvc status
         dvc data status
         dvc pull
