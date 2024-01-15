@@ -12,7 +12,7 @@ model_config = OmegaConf.load('ml_ops_dog_breeds/models/config.yaml')
 trainer_config = OmegaConf.load('ml_ops_dog_breeds/config.yaml')
 
 # load data
-data = DogBreedsDataModule(trainer_config.hyperparameters.num_workers)
+data = DogBreedsDataModule(num_workers=trainer_config.hyperparameters.num_workers)
 
 # model class
 model = MyNeuralNet(
