@@ -42,17 +42,17 @@ jobs:
         pip install -r requirements.txt
         pip install -r requirements_tests.txt
 
-    - name: Get dvc cache dir
-      id: dvc-cache-dir
-      run: |
-        echo "::set-output name=dir::$(dvc cache dir)"
-
     - name: Install dvc
       run: |
         pip install dvc
         pip install -U pip
         pip install "dvc[gdrive]"
         pip install "dvc[all]"
+
+    - name: Get dvc cache dir
+      id: dvc-cache-dir
+      run: |
+        echo "::set-output name=dir::$(dvc cache dir)"
 
     - name: Get dvc cache data
       id: dvc-cache
