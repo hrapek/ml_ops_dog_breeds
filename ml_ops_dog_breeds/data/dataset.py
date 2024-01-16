@@ -78,7 +78,7 @@ class DogBreedsDataModule(LightningDataModule):
 
     def val_dataloader(self, batch_size):
         val = torch.load(f'{self.save_path}/val_data.pt')
-        return torch.utils.data.DataLoader(val, batch_size=batch_size, shuffle=True, num_workers=self.num_workers)
+        return torch.utils.data.DataLoader(val, batch_size=batch_size, shuffle=False, persistent_workers=True, num_workers=self.num_workers)
 
     def test_dataloader(self, batch_size):
         test = torch.load(f'{self.save_path}/test_data.pt')
