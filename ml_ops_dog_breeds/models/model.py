@@ -53,7 +53,7 @@ class MyNeuralNet(LightningModule):
         self.log('train_acc', acc)
         return loss
 
-    def validation_step(self, batch):
+    def validation_step(self, batch, batch_idx):
         images, labels = batch
         preds = self(images)
         loss = self.criterium(preds, labels.long())
