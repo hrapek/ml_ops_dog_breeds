@@ -23,7 +23,7 @@ class DogBreedsDataModule(LightningDataModule):
             torch.save(test, f'{self.save_path}/test_data.pt')
             joblib.dump(label_encoder, f'{self.save_path}/label_encoder.pkl')
 
-    @profile
+    # @profile
     def process_data(self, load_path):
         """Return the label encoder, train, val and test dataloaders."""
 
