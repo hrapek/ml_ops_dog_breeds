@@ -5,8 +5,6 @@ from data.dataset import DogBreedsDataModule
 from pytorch_lightning import Trainer
 from pytorch_lightning.loggers import WandbLogger
 
-# TODO check pep8
-
 # hydra configs
 model_config = OmegaConf.load('ml_ops_dog_breeds/models/config.yaml')
 trainer_config = OmegaConf.load('ml_ops_dog_breeds/config.yaml')
@@ -26,7 +24,7 @@ checkpoint_callback = ModelCheckpoint(dirpath='./models', monitor='train_loss', 
 
 # train, val datasets
 train_dataloader = data.train_dataloader(batch_size=trainer_config.hyperparameters.batch_size)
-# val_dataloader = data.val_dataloader(batch_size=trainer_config.hyperparameters.batch_size)
+val_dataloader = data.val_dataloader(batch_size=trainer_config.hyperparameters.batch_size)
 
 # trainer with wandb logger
 trainer = Trainer(
@@ -37,4 +35,4 @@ trainer = Trainer(
 )
 
 if __name__ == '__main__':
-    trainer.fit(model, train_dataloader) #, val_dataloader)
+    trainer.fit(model, train_dataloader, val_dataloader)

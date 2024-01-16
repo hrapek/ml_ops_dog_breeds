@@ -3,7 +3,6 @@ import timm
 from torch import nn, optim
 from pytorch_lightning import LightningModule
 
-# TODO add validation_step()
 
 class MyNeuralNet(LightningModule):
     """Basic neural network class.
@@ -26,7 +25,7 @@ class MyNeuralNet(LightningModule):
 
         self.base_model.fc = nn.Sequential(
             nn.Linear(self.base_model.fc.in_features, 256),  # Additional linear layer with 256 output features
-            nn.ReLU(inplace=True),  # Activation function (you can choose other activation functions too)
+            nn.ReLU(inplace=True),  # Activation function
             nn.Dropout(0.5),  # Dropout layer with 50% probability
             nn.Linear(256, self.out_features),  # Final prediction fc layer
         )
@@ -54,8 +53,14 @@ class MyNeuralNet(LightningModule):
         self.log('train_acc', acc)
         return loss
 
-    def configure_optimizers(self):
-        return optim.Adam(self.parameters(), lr=self.lr)
+    def validation_step(self, batch):
+        images, labels = batch
+        preds = self(images)
+        loss = self.criterium(preds, labels.long())
+        acc = (labels == preds.argmax(dim=-1)).float().mean()
+        metrics = {'val_acc': acc, 'val_loss': loss}
+        self.log_dict(metrics)
+        return metrics
 
     def test_step(self, batch):
         images, labels = batch
@@ -65,6 +70,9 @@ class MyNeuralNet(LightningModule):
         metrics = {'test_acc': acc, 'test_loss': loss}
         self.log_dict(metrics)
         return metrics
+
+    def configure_optimizers(self):
+        return optim.Adam(self.parameters(), lr=self.lr)
 
 
 if __name__ == '__main__':
