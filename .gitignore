@@ -6,4 +6,4 @@ __pycache__
 build
 wandb
 lightning_logs
-models
+/models
