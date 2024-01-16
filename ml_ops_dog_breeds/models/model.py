@@ -74,7 +74,7 @@ class MyNeuralNet(LightningModule):
         return metrics
 
     def configure_optimizers(self):
-        return optim.Adam(self.fc.parameters(), lr=self.lr)
+        return optim.Adam(self.base_model.fc.parameters(), lr=self.lr)
 
 
 if __name__ == '__main__':
