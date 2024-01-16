@@ -5,6 +5,7 @@ IMAGE_SHAPE = (3, 224, 224)
 LABELS_RANGE = (0, 119)
 NUM_CLASSES = 120
 
+
 class TestTraining:
     def load_data(self):
         model = MyNeuralNet(model_type='resnet18', out_features=120, lr=0.001)

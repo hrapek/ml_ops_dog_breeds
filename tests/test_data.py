@@ -6,6 +6,7 @@ N_SAMPLES = 10222
 IMAGE_SHAPE = (3, 224, 224)
 LABELS_RANGE = (0, 119)
 
+
 class TestData:
     def load_datasets(self):
         processed_data_path = os.path.join(_PATH_DATA, 'processed')
@@ -35,5 +36,5 @@ class TestData:
         for dataset in self.load_datasets():
             mean = torch.mean(dataset.tensors[0])
             std = torch.std(dataset.tensors[0])
-            assert torch.isclose(mean, torch.tensor(0.), atol=1e-2)
-            assert torch.isclose(std, torch.tensor(1.), atol=1e-2)
+            assert torch.isclose(mean, torch.tensor(0.0), atol=1e-2)
+            assert torch.isclose(std, torch.tensor(1.0), atol=1e-2)

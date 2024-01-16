@@ -27,10 +27,7 @@ class DogBreedsDataModule(LightningDataModule):
     def process_data(self, load_path):
         """Return the label encoder, train, val and test dataloaders."""
 
-        transformations = transforms.Compose([
-            transforms.Resize((224, 224)),
-            transforms.ToTensor()
-        ])
+        transformations = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()])
 
         labels = self.read_labels(f'{load_path}/labels.csv')
         label_encoder = LabelEncoder()
@@ -59,7 +56,7 @@ class DogBreedsDataModule(LightningDataModule):
             torch.utils.data.TensorDataset(self.normalize(x_train), y_train),
             torch.utils.data.TensorDataset(self.normalize(x_val), y_val),
             torch.utils.data.TensorDataset(self.normalize(x_test), y_test),
-            label_encoder
+            label_encoder,
         )
 
     def normalize(self, x):
@@ -72,7 +69,9 @@ class DogBreedsDataModule(LightningDataModule):
 
     def val_dataloader(self, batch_size):
         val = torch.load(f'{self.save_path}/val_data.pt')
-        return torch.utils.data.DataLoader(val, batch_size=batch_size, shuffle=False, persistent_workers=True, num_workers=self.num_workers)
+        return torch.utils.data.DataLoader(
+            val, batch_size=batch_size, shuffle=False, persistent_workers=True, num_workers=self.num_workers
+        )
 
     def test_dataloader(self, batch_size):
         test = torch.load(f'{self.save_path}/test_data.pt')
@@ -83,7 +82,7 @@ class DogBreedsDataModule(LightningDataModule):
 
         with open(filepath, 'r') as f:
             reader = csv.reader(f)
-            next(reader) # Skip the header
+            next(reader)  # Skip the header
             labels = {row[0]: row[1] for row in reader}
 
         return labels
@@ -93,7 +92,13 @@ class DogBreedsDataModule(LightningDataModule):
 
     def read_data(self, labels: Dict[str, str], label_encoder, transformations) -> List:
         images_folder = f'{self.load_path}/images/'
-        data = [(self.read_image(f'{images_folder}/{image_id}.jpg', transformations), label_encoder.transform([labels[image_id]])[0]) for image_id in labels.keys()]
+        data = [
+            (
+                self.read_image(f'{images_folder}/{image_id}.jpg', transformations),
+                label_encoder.transform([labels[image_id]])[0],
+            )
+            for image_id in labels.keys()
+        ]
         images_tensor = torch.stack([image for image, _ in data])
         labels_tensor = torch.tensor([label for _, label in data])
         return images_tensor, labels_tensor
