@@ -24,10 +24,10 @@ class MyNeuralNet(LightningModule):
         self.base_model = timm.create_model(self.model_type, pretrained=True)
 
         self.base_model.fc = nn.Sequential(
-            nn.Linear(self.base_model.fc.in_features, 256),  # Additional linear layer with 256 output features
-            nn.ReLU(inplace=True),  # Activation function
-            nn.Dropout(0.5),  # Dropout layer with 50% probability
-            nn.Linear(256, self.out_features),  # Final prediction fc layer
+            nn.Linear(self.base_model.fc.in_features, 512),
+            nn.ReLU(inplace=True),
+            nn.Dropout(0.4),
+            nn.Linear(512, self.out_features)
         )
 
         self.criterium = nn.CrossEntropyLoss()
@@ -42,7 +42,8 @@ class MyNeuralNet(LightningModule):
             Output tensor with shape [N,out_features]
 
         """
-        return self.base_model(x)
+        x = self.base_model(x)
+        return x
 
     def training_step(self, batch):
         images, labels = batch
@@ -72,7 +73,7 @@ class MyNeuralNet(LightningModule):
         return metrics
 
     def configure_optimizers(self):
-        return optim.Adam(self.parameters(), lr=self.lr)
+        return optim.Adam(self.base_model.fc.parameters(), lr=self.lr)
 
 
 if __name__ == '__main__':
