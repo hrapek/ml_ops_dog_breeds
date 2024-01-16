@@ -24,12 +24,11 @@ class MyNeuralNet(LightningModule):
         self.base_model = timm.create_model(self.model_type, pretrained=True)
 
         self.base_model.fc = nn.Sequential(
-            nn.Linear(self.base_model.fc.in_features, 512),  # Additional linear layer with 256 output features
-            nn.ReLU(inplace=True),  # Activation function
-            # nn.Dropout(0.5),  # Dropout layer with 50% probability
-            nn.Linear(512, self.out_features),  # Final prediction fc layer
+            nn.Linear(self.base_model.fc.in_features, 512),
+            nn.ReLU(inplace=True),
+            nn.Dropout(0.4),
+            nn.Linear(512, self.out_features)
         )
-
 
         self.criterium = nn.CrossEntropyLoss()
 
