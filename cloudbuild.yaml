@@ -1,0 +1,15 @@
+steps:
+    - name: 'gcr.io/cloud-builders/docker'
+      args: ['build', '-t', 'gcr.io/ml-ops-dog-breeds/dog_breeds_api', '-f', 'dockerfiles/api.dockerfile', '.']
+    - name: 'gcr.io/cloud-builders/docker'
+      args: ['push', 'gcr.io/ml-ops-dog-breeds/dog_breeds_api']
+    - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+      entrypoint: gcloud
+      args:
+      - 'run'
+      - 'deploy'
+      - 'dog_breeds_service'
+      - '--image'
+      - 'gcr.io/ml-ops-dog-breeds/dog_breeds_api:latest'
+      - '--region'
+      - 'europe-west1'
