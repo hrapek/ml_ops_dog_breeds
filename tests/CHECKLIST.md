@@ -33,7 +33,7 @@ Please note that all the lists are exhaustive meaning that I do not expect you t
 - [X] Get your model training in GCP using either the Engine or Vertex AI
 - [X] Create a FastAPI application that can do inference using your model
 - [ ] If applicable, consider deploying the model locally using torchserve
-- [ ] Deploy your model in GCP using either Functions or Run as the backend
+- [X] Deploy your model in GCP using either Functions or Run as the backend
 
 ### Week 3
 

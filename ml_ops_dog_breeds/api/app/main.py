@@ -21,12 +21,14 @@ def root():
     return response
 
 
+
+
 @app.post('/predict/')
 async def predict_label(file: UploadFile = File(...)):
     data = DogBreedsDataModule()
 
     # checkpoint location
-    checkpoint_path = 'models/epoch=0-step=128-v1.ckpt'
+    checkpoint_path = 'models/epoch=29-step=3840.ckpt'
     model = MyNeuralNet.load_from_checkpoint(checkpoint_path)
 
     transformations = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()])
