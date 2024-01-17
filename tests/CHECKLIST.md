@@ -39,13 +39,13 @@ Please note that all the lists are exhaustive meaning that I do not expect you t
 
 - [ ] Check how robust your model is towards data drifting
 - [ ] Setup monitoring for the system telemetry of your deployed model
-- [ ] Setup monitoring for the performance of your deployed model
-- [ ] If applicable, play around with distributed data loading
+- [X] Setup monitoring for the performance of your deployed model
+- [X] If applicable, play around with distributed data loading
 - [ ] If applicable, play around with distributed model training
 - [ ] Play around with quantization, compilation and pruning for you trained models to increase inference speed
 
 ### Additional
 
-- [ ] Revisit your initial project description. Did the project turn out as you wanted?
-- [ ] Make sure all group members have a understanding about all parts of the project
-- [ ] Uploaded all your code to github
+- [X] Revisit your initial project description. Did the project turn out as you wanted?
+- [X] Make sure all group members have an understanding about all parts of the project
+- [X] Uploaded all your code to github
