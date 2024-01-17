@@ -1,6 +1,9 @@
 import os
 import torch
+import pytest
 from tests import _PATH_DATA
+from ml_ops_dog_breeds.data.dataset import DogBreedsDataModule
+
 
 N_SAMPLES = 10222
 IMAGE_SHAPE = (3, 224, 224)
@@ -14,6 +17,10 @@ class TestData:
         val_dataset = torch.load(os.path.join(processed_data_path, 'val_data.pt'))
         test_dataset = torch.load(os.path.join(processed_data_path, 'test_data.pt'))
         return train_dataset, val_dataset, test_dataset
+
+    @pytest.mark.order(1)
+    def test_create_dataset(self):
+        DogBreedsDataModule().setup()
 
     def test_num_samples(self):
         train_dataset, val_dataset, test_dataset = self.load_datasets()
