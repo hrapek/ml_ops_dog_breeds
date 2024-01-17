@@ -11,6 +11,7 @@ repos:
     -   id: check-toml
     -   id: double-quote-string-fixer
     -   id: requirements-txt-fixer
+        exclude: requirements.txt
 # -   repo: https://github.com/astral-sh/ruff-pre-commit
 #     rev: v0.1.13
 #     hooks:
