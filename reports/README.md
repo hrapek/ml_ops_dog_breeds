@@ -359,7 +359,12 @@ To make sure that our code is reproducible we developed three dockerfiles: one f
 >
 > Answer:
 
---- question 17 fill here ---
+We used following services for our project:
+- Compute Engine for training our model
+- Buckets in Cloud Storage for storing the raw data and model checkpoint and added it to dvc
+- Cloud Build for building docker images
+- Artifact Registry for storing built images
+- Cloud Run for deploying our model
 
 ### Question 18
 
