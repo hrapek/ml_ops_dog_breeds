@@ -9,7 +9,7 @@ from sklearn.preprocessing import LabelEncoder
 
 
 class DogBreedsDataModule(LightningDataModule):
-    def __init__(self, load_path: str = 'data/raw/', save_path: str = 'data/processed/', num_workers: int = 1) -> None:
+    def __init__(self, load_path: str = 'data/raw', save_path: str = 'data/processed', num_workers: int = 1) -> None:
         super().__init__()
         self.load_path = load_path
         self.save_path = save_path
