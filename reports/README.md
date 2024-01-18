@@ -181,7 +181,9 @@ We used `cookiecutter` template from our project. When using `dvc pull`, the `da
 >
 > Answer:
 
---- question 6 fill here ---
+We use pre-commit to enforce some format rules.
+
+Especially in larger projects it is very important to have standards for formating and other structures so it is easier for someone to look for information in other peoples code. Additionally, for some applications it it nessecary to have the same names or data structures between systems (e.g. api).
 
 ## Version control
 
@@ -200,7 +202,10 @@ We used `cookiecutter` template from our project. When using `dvc pull`, the `da
 >
 > Answer:
 
---- question 7 fill here ---
+In the `tests/test_*.py` files we have implemented 8 tests in the areas data, model and training.
+For example, `test_data.py/test_num_samples` compares the number of samples in the dataset which got pulled via dvc to the total number of samples in the cloud storage, testing if all the data got pulled.
+
+TODO: longer
 
 ### Question 8
 
@@ -230,7 +235,11 @@ We used `cookiecutter` template from our project. When using `dvc pull`, the `da
 >
 > Answer:
 
---- question 9 fill here ---
+We only used branches in a very limited capacity, mostly because possible overhead in this project might have been bigger that communicating which area each person is working on, because they were generally seperate.
+
+In larger or more complex project, a seperate branch for each feature getting implemented could be used.
+
+TODO: longer
 
 ### Question 10
 
@@ -246,6 +255,7 @@ We used `cookiecutter` template from our project. When using `dvc pull`, the `da
 > Answer:
 
 We did use DVC in this project. It was used for the raw data to provide a way we could have the data in a cloud storage that we have control over (in contrast to a direct import from keggle) and can still separate from the code and github.
+
 TODO: longer
 
 ### Question 11
@@ -263,6 +273,7 @@ TODO: longer
 > Answer:
 
 We are testing on linux, mac and windows. We use caching for the dependencies and for the data pulling.
+
 TODO: longer
 
 ## Running code and tracking experiments
