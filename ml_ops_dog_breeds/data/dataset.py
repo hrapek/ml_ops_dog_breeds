@@ -91,7 +91,7 @@ class DogBreedsDataModule(LightningDataModule):
         return transformations(Image.open(path))
 
     def read_data(self, labels: Dict[str, str], label_encoder, transformations) -> List:
-        images_folder = f'{self.load_path}/images/'
+        images_folder = f'{self.load_path}/images'
         data = [
             (
                 self.read_image(f'{images_folder}/{image_id}.jpg', transformations),
