@@ -2,7 +2,7 @@ name: "Run tests"
 
 on:
   push:
-    branches: [ master, main ]
+    branches: [ master, main, test-without-cache ]
   pull_request:
     branches: [ master, main ]
 
@@ -45,20 +45,19 @@ jobs:
         pip install -r requirements.txt
         pip install -r requirements_tests.txt
 
-    - name: Get dvc cache dir
-      id: dvc-cache-dir
-      run: |
-        echo "::set-output name=dir::$(dvc cache dir)"
+    # - name: Get dvc cache dir
+    #   id: dvc-cache-dir
+    #   run: |
+    #     echo "::set-output name=dir::$(dvc cache dir)"
 
-    - name: Get dvc cache data
-      id: dvc-cache
-      uses: actions/cache@v3
-      with:
-        path: ${{ steps.dvc-cache-dir.outputs.dir }}
-        key: ${{ matrix.os }}-dvc-${{ hashFiles('**/data/raw.dvc') }}
+    # - name: Get dvc cache data
+    #   id: dvc-cache
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: ${{ steps.dvc-cache-dir.outputs.dir }}
+    #     key: ${{ matrix.os }}-dvc-${{ hashFiles('**/data/raw.dvc') }}
 
     - name: Pull dvc data
-      if: steps.dvc-cache.outputs.cache-hit != 'true'
       run: |
         # dvc remote add -d remote_storage gs://ml_ops_group_75_data_bucket/
         dvc status
