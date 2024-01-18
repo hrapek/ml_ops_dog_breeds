@@ -5,11 +5,22 @@ from pytorch_lightning import LightningModule
 
 
 class MyNeuralNet(LightningModule):
-    """Basic neural network class.
+    """Neural network model for image classification.
 
     Args:
-        in_features: number of input features
-        out_features: number of output features
+        model_type (str): Type of the base model architecture.
+        out_features (int): Number of output features for the final classification layer.
+        lr (float): Learning rate for the optimizer.
+
+    Attributes:
+        base_model (torch.nn.Module): Base model with a modified final classification layer.
+        criterium (torch.nn.CrossEntropyLoss): Loss function for training.
+
+    Example:
+        Instantiate the model for image classification with 120 output features:
+        ```python
+        model = MyNeuralNet(model_type='resnet18', out_features=120, lr=0.001)
+        ```
 
     """
 

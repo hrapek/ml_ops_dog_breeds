@@ -12,7 +12,7 @@ steps:
       args:
       - 'run'
       - 'deploy'
-      - 'dog_breeds_service'
+      - 'dog-breeds-service'
       - '--image'
       - 'gcr.io/ml-ops-dog-breeds/dog_breeds_api:latest'
       - '--region'

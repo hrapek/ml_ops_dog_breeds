@@ -4,18 +4,54 @@ import joblib
 import torch
 from torchvision import transforms
 from pytorch_lightning import LightningDataModule
-from typing import Dict, List
+from typing import Dict, Tuple
 from sklearn.preprocessing import LabelEncoder
 
+import os
+
+#_DATASCRIPTS_ROOT = os.path.dirname(__file__)  # folder of this script == ml_ops_dog_breeds/ml_ops_dog_breeds/data
+#_PROJECT_ROOT = os.path.dirname(_DATASCRIPTS_ROOT)  # root of project == ml_ops_dog_breeds/ml_ops_dog_breeds
+#_FOLDER_ROOT = os.path.dirname(_PROJECT_ROOT)  # root of folder == ml_ops_dog_breeds
+#_PATH_DATA = os.path.join(_FOLDER_ROOT, 'data')  # path of data (not this data folder, but global)
+_PATH_ROOTFOLDER = os.path.join(os.path.dirname(__file__).split('ml_ops_dog_breeds')[0], 'ml_ops_dog_breeds')
+_PATH_DATA = os.path.join(_PATH_ROOTFOLDER, 'data')
 
 class DogBreedsDataModule(LightningDataModule):
-    def __init__(self, load_path: str = 'data/raw/', save_path: str = 'data/processed/', num_workers: int = 1) -> None:
+    """Lightning DataModule for loading and processing Dog Breeds classification data.
+
+    Args:
+        load_path (str): Path to the raw data directory (default: 'data/raw').
+        save_path (str): Path to the processed data directory (default: 'data/processed').
+        num_workers (int): Number of workers for data loading (default: 1).
+
+    Attributes:
+        load_path (str): Path to the raw data directory.
+        save_path (str): Path to the processed data directory.
+        num_workers (int): Number of workers for data loading.
+
+    Example:
+        Initialize the DogBreedsDataModule:
+        ```python
+        data_module = DogBreedsDataModule(load_path='data/raw', save_path='data/processed', num_workers=4)
+        ```
+
+    """
+    def __init__(self, load_path: str = os.path.join(_PATH_DATA, 'raw'), save_path: str = os.path.join(_PATH_DATA,'processed'), num_workers: int = 1) -> None:
         super().__init__()
         self.load_path = load_path
         self.save_path = save_path
         self.num_workers = num_workers
 
-    def setup(self, stage=None):
+    def setup(self, stage=None) -> None:
+        """Setup method to process and save the preprocessed data.
+
+        Args:
+            stage (str): Stage of training (fit, test, or None).
+
+        Returns:
+            None
+
+        """
         if stage == 'fit' or stage is None:
             train, val, test, label_encoder = self.process_data(self.load_path)
             torch.save(train, f'{self.save_path}/train_data.pt')
@@ -25,11 +61,26 @@ class DogBreedsDataModule(LightningDataModule):
 
     # @profile
     def process_data(self, load_path):
-        """Return the label encoder, train, val and test dataloaders."""
+        """Process and split the data into train, validation, and test sets.
+
+        Args:
+            load_path (str): Path to the raw data directory.
+
+        Returns:
+            Tuple[torch.utils.data.TensorDataset]: Train, validation, and test datasets.
+            LabelEncoder: Encoder for dog breed labels.
+
+        """
 
         transformations = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()])
 
-        labels = self.read_labels(f'{load_path}/labels.csv')
+        #print(load_path)
+        #print(os.path.join(load_path, 'labels.csv'))
+        #print(os.path.dirname(__file__))
+        #print(_DATASCRIPTS_ROOT)
+        #print(_PROJECT_ROOT)
+        #print(_PATH_DATA)
+        labels = self.read_labels(os.path.join(load_path, 'labels.csv')) # f'{load_path}/labels.csv')
         label_encoder = LabelEncoder()
         label_encoder.fit(list(labels.values()))
 
@@ -59,21 +110,21 @@ class DogBreedsDataModule(LightningDataModule):
             label_encoder,
         )
 
-    def normalize(self, x):
+    def normalize(self, x: torch.Tensor) -> torch.Tensor:
         mean, std = torch.mean(x), torch.std(x)
         return (x - mean) / std
 
-    def train_dataloader(self, batch_size):
+    def train_dataloader(self, batch_size: int) -> torch.utils.data.DataLoader:
         train = torch.load(f'{self.save_path}/train_data.pt')
         return torch.utils.data.DataLoader(train, batch_size=batch_size, shuffle=True, num_workers=self.num_workers)
 
-    def val_dataloader(self, batch_size):
+    def val_dataloader(self, batch_size: int) -> torch.utils.data.DataLoader:
         val = torch.load(f'{self.save_path}/val_data.pt')
         return torch.utils.data.DataLoader(
             val, batch_size=batch_size, shuffle=False, persistent_workers=True, num_workers=self.num_workers
         )
 
-    def test_dataloader(self, batch_size):
+    def test_dataloader(self, batch_size: int) -> torch.utils.data.DataLoader:
         test = torch.load(f'{self.save_path}/test_data.pt')
         return torch.utils.data.DataLoader(test, batch_size=batch_size, num_workers=self.num_workers)
 
@@ -87,11 +138,11 @@ class DogBreedsDataModule(LightningDataModule):
 
         return labels
 
-    def read_image(self, path, transformations):
+    def read_image(self, path: str, transformations: transforms.Compose) -> torch.Tensor:
         return transformations(Image.open(path))
 
-    def read_data(self, labels: Dict[str, str], label_encoder, transformations) -> List:
-        images_folder = f'{self.load_path}/images/'
+    def read_data(self, labels: Dict[str, str], label_encoder: LabelEncoder, transformations: transforms.Compose) -> Tuple[torch.Tensor, torch.Tensor]:
+        images_folder = f'{self.load_path}/images'
         data = [
             (
                 self.read_image(f'{images_folder}/{image_id}.jpg', transformations),

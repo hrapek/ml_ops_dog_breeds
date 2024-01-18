@@ -11,7 +11,8 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [macos-latest]
+        # os: [ubuntu-latest, macos-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -45,17 +46,17 @@ jobs:
         pip install -r requirements.txt
         pip install -r requirements_tests.txt
 
-    - name: Get dvc cache dir
-      id: dvc-cache-dir
-      run: |
-        echo "::set-output name=dir::$(dvc cache dir)"
+    # - name: Get dvc cache dir
+    #   id: dvc-cache-dir
+    #   run: |
+    #     echo "::set-output name=dir::$(dvc cache dir)"
 
-    - name: Get dvc cache data
-      id: dvc-cache
-      uses: actions/cache@v3
-      with:
-        path: ${{ steps.dvc-cache-dir.outputs.dir }}
-        key: ${{ matrix.os }}-dvc-${{ hashFiles('**/data/raw.dvc') }}
+    # - name: Get dvc cache data
+    #   id: dvc-cache
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: ${{ steps.dvc-cache-dir.outputs.dir }}
+    #     key: ${{ matrix.os }}-dvc-${{ hashFiles('**/data/raw.dvc') }}
 
     - name: Pull dvc data
       if: steps.dvc-cache.outputs.cache-hit != 'true'

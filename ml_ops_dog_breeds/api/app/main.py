@@ -36,6 +36,15 @@ def root():
 
 @app.post('/predict/')
 async def predict_label(file: UploadFile = File(...)):
+    """Predict the dog breed from an uploaded image file.
+
+    Args:
+        file (UploadFile): Uploaded image file.
+
+    Returns:
+        Dict[str, str]: Dictionary containing the predicted dog breed.
+
+    """
     data = DogBreedsDataModule()
 
     # checkpoint location
