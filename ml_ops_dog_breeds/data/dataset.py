@@ -7,9 +7,15 @@ from pytorch_lightning import LightningDataModule
 from typing import Dict, List
 from sklearn.preprocessing import LabelEncoder
 
+import os
+
+_DATASCRIPTS_ROOT = os.path.dirname(__file__)  # root of test folder
+_PROJECT_ROOT = os.path.dirname(_DATASCRIPTS_ROOT)  # root of project
+_PATH_DATA = os.path.join(_PROJECT_ROOT, 'data')  # root of data
+
 
 class DogBreedsDataModule(LightningDataModule):
-    def __init__(self, load_path: str = 'data/raw', save_path: str = 'data/processed', num_workers: int = 1) -> None:
+    def __init__(self, load_path: str = os.path.join(_PATH_DATA, 'raw'), save_path: str = os.path.join(_PATH_DATA,'processed'), num_workers: int = 1) -> None:
         super().__init__()
         self.load_path = load_path
         self.save_path = save_path
