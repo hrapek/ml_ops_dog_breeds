@@ -4,7 +4,7 @@ import joblib
 import torch
 from torchvision import transforms
 from pytorch_lightning import LightningDataModule
-from typing import Dict, List
+from typing import Dict, Tuple
 from sklearn.preprocessing import LabelEncoder
 
 import os
@@ -40,7 +40,7 @@ class DogBreedsDataModule(LightningDataModule):
         self.save_path = save_path
         self.num_workers = num_workers
 
-    def setup(self, stage=None):
+    def setup(self, stage=None) -> None:
         """Setup method to process and save the preprocessed data.
 
         Args:
@@ -102,21 +102,21 @@ class DogBreedsDataModule(LightningDataModule):
             label_encoder,
         )
 
-    def normalize(self, x):
+    def normalize(self, x: torch.Tensor) -> torch.Tensor:
         mean, std = torch.mean(x), torch.std(x)
         return (x - mean) / std
 
-    def train_dataloader(self, batch_size):
+    def train_dataloader(self, batch_size: int) -> torch.utils.data.DataLoader:
         train = torch.load(f'{self.save_path}/train_data.pt')
         return torch.utils.data.DataLoader(train, batch_size=batch_size, shuffle=True, num_workers=self.num_workers)
 
-    def val_dataloader(self, batch_size):
+    def val_dataloader(self, batch_size: int) -> torch.utils.data.DataLoader:
         val = torch.load(f'{self.save_path}/val_data.pt')
         return torch.utils.data.DataLoader(
             val, batch_size=batch_size, shuffle=False, persistent_workers=True, num_workers=self.num_workers
         )
 
-    def test_dataloader(self, batch_size):
+    def test_dataloader(self, batch_size: int) -> torch.utils.data.DataLoader:
         test = torch.load(f'{self.save_path}/test_data.pt')
         return torch.utils.data.DataLoader(test, batch_size=batch_size, num_workers=self.num_workers)
 
@@ -130,10 +130,10 @@ class DogBreedsDataModule(LightningDataModule):
 
         return labels
 
-    def read_image(self, path, transformations):
+    def read_image(self, path: str, transformations: transforms.Compose) -> torch.Tensor:
         return transformations(Image.open(path))
 
-    def read_data(self, labels: Dict[str, str], label_encoder, transformations) -> List:
+    def read_data(self, labels: Dict[str, str], label_encoder: LabelEncoder, transformations: transforms.Compose) -> Tuple[torch.Tensor, torch.Tensor]:
         images_folder = f'{self.load_path}/images'
         data = [
             (
