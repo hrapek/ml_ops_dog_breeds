@@ -170,7 +170,7 @@ dvc pull
 > *experiments.*
 > Answer:
 
---- question 5 fill here ---
+We used `cookiecutter` template from our project. When using `dvc pull`, the *data* folder is filled with both raw and processed data divided into training, validation and test sets. In the *models* folder we store a checkpoint with a trained model. A source code folder in our case has a name *ml_ops_dog_breeds*. In there we have scripts for training and predictions, config files specifying hyperparameters and model parameters, and folder *model* with script containing the model class. We also added a new folder there, called *api*, that contains scripts with `FastAPI` application. We have filled folder dockerfiles with separate files for training, inference and api. In the folder *tests* we added 3 scripts for testing the data, model and training. We also have *.github/workflows/* file that provides github actions with 2 workflows. Besides that we have a few files in the root directory, such as `requirements` files, `cloudbuild.yaml` or `pre-commit` file.
 
 ### Question 6
 
