@@ -9,9 +9,9 @@ from sklearn.preprocessing import LabelEncoder
 
 import os
 
-_DATASCRIPTS_ROOT = os.path.dirname(__file__)  # root of test folder
+_DATASCRIPTS_ROOT = os.path.dirname(__file__)  # root of this folder
 _PROJECT_ROOT = os.path.dirname(_DATASCRIPTS_ROOT)  # root of project
-_PATH_DATA = os.path.join(_PROJECT_ROOT, 'data')  # root of data
+_PATH_DATA = os.path.join(_PROJECT_ROOT, 'data')  # path of data (not this data folder, but global)
 
 
 class DogBreedsDataModule(LightningDataModule):
