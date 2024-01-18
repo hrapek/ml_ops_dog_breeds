@@ -6,7 +6,6 @@ from ml_ops_dog_breeds.data.dataset import DogBreedsDataModule
 from io import BytesIO
 import joblib
 import torch
-from google.cloud import storage
 
 app = FastAPI()
 
@@ -23,6 +22,7 @@ LABELS_FILE = 'data/processed/label_encoder.pkl'
 
 model = MyNeuralNet.load_from_checkpoint(MODEL_FILE)
 label_encoder = joblib.load(LABELS_FILE)
+
 
 @app.get('/')
 def root():

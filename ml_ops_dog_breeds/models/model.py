@@ -27,7 +27,7 @@ class MyNeuralNet(LightningModule):
             nn.Linear(self.base_model.fc.in_features, 512),
             nn.ReLU(inplace=True),
             nn.Dropout(0.4),
-            nn.Linear(512, self.out_features)
+            nn.Linear(512, self.out_features),
         )
 
         self.criterium = nn.CrossEntropyLoss()
