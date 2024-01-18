@@ -105,7 +105,7 @@ end of the project.
 >
 > Answer:
 
-```75```
+75
 
 ### Question 2
 > **Enter the study number for each member in the group**
@@ -116,7 +116,7 @@ end of the project.
 >
 > Answer:
 
-```s223322, s230241, s222887, ...```
+s223322, s230241, s222887, ...
 
 ### Question 3
 > **What framework did you choose to work with and did it help you complete the project?**
@@ -129,7 +129,7 @@ end of the project.
 >
 > Answer:
 
-```We used third-party framework TIMM in our project. First, we loaded a pretrained resnet18 model from it (finally changed to resnet50) and modified it's final classification layer to fine-tune the model using our own dataset. We also LabelSmoothingCrossEntropy from timm.loss.cross_entropy as our loss function that, according to documentation, is similar to NLL, but, as the name suggests, includes label smoothing, that takes into account the fact that there might be some incorrect labels in the dataset. For configuring the optimization process we used create_optimizer_v2 function from timm.optim.optim_factory with NAdamW as an optimizer.```
+We used third-party framework TIMM in our project. First, we loaded a pretrained resnet18 model from it (finally changed to resnet50) and modified it's final classification layer to fine-tune the model using our own dataset. We also LabelSmoothingCrossEntropy from timm.loss.cross_entropy as our loss function that, according to documentation, is similar to NLL, but, as the name suggests, includes label smoothing, that takes into account the fact that there might be some incorrect labels in the dataset. For configuring the optimization process we used create_optimizer_v2 function from timm.optim.optim_factory with NAdamW as an optimizer.
 
 ## Coding environment
 
@@ -148,7 +148,14 @@ end of the project.
 >
 > Answer:
 
---- question 4 fill here ---
+We were using conda environments to manage the dependencies. We created a `requirements.txt` file to store the dependencies, as well as `requirements_api.txt` for to store requirements of API and model deployment. We used `pipreqs` module for auto-generation of the dependencies. We also used `pyproject.toml` to describe project metadata, linked the `requirements.txt` file there, specified python version and configured `ruff` options in it. To get a complete copy of the environment, the following commands would have to be run:
+```
+git clone https://github.com/hrapek/ml_ops_dog_breeds.git
+cd ml_ops_dog_breeds
+conda create --name dog_breeds_env python=3.11.5
+pip install .
+dvc pull
+```
 
 ### Question 5
 
@@ -163,7 +170,7 @@ end of the project.
 > *experiments.*
 > Answer:
 
---- question 5 fill here ---
+We used `cookiecutter` template from our project. When using `dvc pull`, the *data* folder is filled with both raw and processed data divided into training, validation and test sets. In the *models* folder we store a checkpoint with a trained model. A source code folder in our case has a name *ml_ops_dog_breeds*. In there we have scripts for training and predictions, config files specifying hyperparameters and model parameters, folder `data` with scripts processing the raw data, and folder *model* with script containing the model class. We also added a new folder there, called *api*, that contains scripts with `FastAPI` application. We have filled folder dockerfiles with separate files for training, inference and api. In the folder *tests* we added 3 scripts for testing the data, model and training. We also have *.github/workflows/* file that provides github actions with 2 workflows. Besides that we have a few files in the root directory, such as `requirements` files, `cloudbuild.yaml` or `pre-commit` file.
 
 ### Question 6
 
@@ -273,7 +280,7 @@ end of the project.
 >
 > Answer:
 
---- question 12 fill here ---
+For managing experiments configuration we decided to use `hydra` and config files. We have two separate config files, one for specifying training parameters (number of epochs, batch size etc.) and one for model parameters (i.e. name of pretrained model and number of output features). In general it's sufficient to change values in the config files and run the experiment using `python ml_ops_dog_breeds/train_model.py`. It's important to remember that this assumes that we have already processed data. Otherwise, we first need to run `python ml_ops_dog_breeds/make_dataset.py`.
 
 ### Question 13
 

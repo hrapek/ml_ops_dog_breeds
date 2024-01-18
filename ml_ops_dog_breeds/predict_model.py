@@ -15,7 +15,7 @@ def cli():
 @click.command()
 @click.option('--checkpoint_path', default='models/epoch=29-step=3840.ckpt', help='learning rate to use for training')
 @click.option('--image_path', default='data/predictions/dog.jpg', help='Image used for predictions')
-def predict(checkpoint_path, image_path):
+def predict(checkpoint_path: str, image_path: str) -> str:
     """Predict the dog breed from an input image using a trained neural network.
 
     Args:
