@@ -9,6 +9,25 @@ from sklearn.preprocessing import LabelEncoder
 
 
 class DogBreedsDataModule(LightningDataModule):
+    """Lightning DataModule for loading and processing Dog Breeds classification data.
+
+    Args:
+        load_path (str): Path to the raw data directory (default: 'data/raw').
+        save_path (str): Path to the processed data directory (default: 'data/processed').
+        num_workers (int): Number of workers for data loading (default: 1).
+
+    Attributes:
+        load_path (str): Path to the raw data directory.
+        save_path (str): Path to the processed data directory.
+        num_workers (int): Number of workers for data loading.
+
+    Example:
+        Initialize the DogBreedsDataModule:
+        ```python
+        data_module = DogBreedsDataModule(load_path='data/raw', save_path='data/processed', num_workers=4)
+        ```
+
+    """
     def __init__(self, load_path: str = 'data/raw', save_path: str = 'data/processed', num_workers: int = 1) -> None:
         super().__init__()
         self.load_path = load_path
@@ -16,6 +35,15 @@ class DogBreedsDataModule(LightningDataModule):
         self.num_workers = num_workers
 
     def setup(self, stage=None):
+        """Setup method to process and save the preprocessed data.
+
+        Args:
+            stage (str): Stage of training (fit, test, or None).
+
+        Returns:
+            None
+
+        """
         if stage == 'fit' or stage is None:
             train, val, test, label_encoder = self.process_data(self.load_path)
             torch.save(train, f'{self.save_path}/train_data.pt')
@@ -25,7 +53,16 @@ class DogBreedsDataModule(LightningDataModule):
 
     # @profile
     def process_data(self, load_path):
-        """Return the label encoder, train, val and test dataloaders."""
+        """Process and split the data into train, validation, and test sets.
+
+        Args:
+            load_path (str): Path to the raw data directory.
+
+        Returns:
+            Tuple[torch.utils.data.TensorDataset]: Train, validation, and test datasets.
+            LabelEncoder: Encoder for dog breed labels.
+
+        """
 
         transformations = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()])
 
@@ -91,7 +128,7 @@ class DogBreedsDataModule(LightningDataModule):
         return transformations(Image.open(path))
 
     def read_data(self, labels: Dict[str, str], label_encoder, transformations) -> List:
-        images_folder = f'{self.load_path}/images/'
+        images_folder = f'{self.load_path}/images'
         data = [
             (
                 self.read_image(f'{images_folder}/{image_id}.jpg', transformations),
