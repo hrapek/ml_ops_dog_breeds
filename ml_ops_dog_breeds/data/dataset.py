@@ -9,9 +9,10 @@ from sklearn.preprocessing import LabelEncoder
 
 import os
 
-_DATASCRIPTS_ROOT = os.path.dirname(__file__)  # root of this folder
-_PROJECT_ROOT = os.path.dirname(_DATASCRIPTS_ROOT)  # root of project
-_PATH_DATA = os.path.join(_PROJECT_ROOT, 'data')  # path of data (not this data folder, but global)
+_DATASCRIPTS_ROOT = os.path.dirname(__file__)  # folder of this script == ml_ops_dog_breeds/ml_ops_dog_breeds/data
+_PROJECT_ROOT = os.path.dirname(_DATASCRIPTS_ROOT)  # root of project == ml_ops_dog_breeds/ml_ops_dog_breeds
+_FOLDER_ROOT = os.path.dirname(_PROJECT_ROOT)  # root of folder == ml_ops_dog_breeds
+_PATH_DATA = os.path.join(_FOLDER_ROOT, 'data')  # path of data (not this data folder, but global)
 
 
 class DogBreedsDataModule(LightningDataModule):
@@ -72,7 +73,13 @@ class DogBreedsDataModule(LightningDataModule):
 
         transformations = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()])
 
-        labels = self.read_labels(f'{load_path}/labels.csv')
+        print(load_path)
+        print(os.path.join(load_path, 'labels.csv'))
+        print(os.path.dirname(__file__))
+        print(_DATASCRIPTS_ROOT)
+        print(_PROJECT_ROOT)
+        print(_PATH_DATA)
+        labels = self.read_labels(os.path.join(load_path, 'labels.csv')) # f'{load_path}/labels.csv')
         label_encoder = LabelEncoder()
         label_encoder.fit(list(labels.values()))
 

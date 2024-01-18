@@ -26,7 +26,7 @@ def predict(checkpoint_path, image_path):
         str: Predicted dog breed label.
 
     """
-    
+
     # data
     data = DogBreedsDataModule()
 

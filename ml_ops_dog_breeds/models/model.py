@@ -15,7 +15,7 @@ class MyNeuralNet(LightningModule):
     Attributes:
         base_model (torch.nn.Module): Base model with a modified final classification layer.
         criterium (torch.nn.CrossEntropyLoss): Loss function for training.
-    
+
     Example:
         Instantiate the model for image classification with 120 output features:
         ```python
@@ -23,7 +23,7 @@ class MyNeuralNet(LightningModule):
         ```
 
     """
-    
+
     def __init__(self, model_type: str, out_features: int, lr: float) -> None:
         super().__init__()
         self.save_hyperparameters()
