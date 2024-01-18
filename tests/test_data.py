@@ -1,7 +1,7 @@
 import os
 import torch
 import pytest
-from __init__ import _PATH_DATA
+from . import _PATH_DATA
 from ml_ops_dog_breeds.data.dataset import DogBreedsDataModule
 
 
