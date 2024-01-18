@@ -148,7 +148,7 @@ We used third-party framework TIMM in our project. First, we loaded a pretrained
 >
 > Answer:
 
-We were using conda environments to manage the dependencies. We created a `requirements.txt` file to store the dependencies, as well as `requirements_api.txt` for to store requirements of API and model deployment. We used `pipreqs` module for auto-generation of the dependencies. We also used `pyproject.toml` to describe project metadata, linked the `requirements.txt` file there, specified python version and configured `ruff` options in it. To get a complete copy of the environment, the following commands would have to be run:
+We were using conda environments to manage the dependencies. We created a `requirements.txt` file to store the dependencies, as well as `requirements_api.txt` to store requirements of API and model deployment. Similarly, `requirements_dev.txt` and `requirements_tests.txt` include dependencies used for development and testing. We used `pipreqs` module for auto-generation of the dependencies. We also used `pyproject.toml` to describe project metadata, linked the `requirements.txt` file there, specified python version and configured `ruff` options in it. To get a complete copy of the environment, the following commands would have to be run:
 ```
 git clone https://github.com/hrapek/ml_ops_dog_breeds.git
 cd ml_ops_dog_breeds
@@ -170,7 +170,7 @@ dvc pull
 > *experiments.*
 > Answer:
 
-We used `cookiecutter` template from our project. When using `dvc pull`, the *data* folder is filled with both raw and processed data divided into training, validation and test sets. In the *models* folder we store a checkpoint with a trained model. A source code folder in our case has a name *ml_ops_dog_breeds*. In there we have scripts for training and predictions, config files specifying hyperparameters and model parameters, folder `data` with scripts processing the raw data, and folder *model* with script containing the model class. We also added a new folder there, called *api*, that contains scripts with `FastAPI` application. We have filled folder dockerfiles with separate files for training, inference and api. In the folder *tests* we added 3 scripts for testing the data, model and training. We also have *.github/workflows/* file that provides github actions with 2 workflows. Besides that we have a few files in the root directory, such as `requirements` files, `cloudbuild.yaml` or `pre-commit` file.
+We used `cookiecutter` template from our project. When using `dvc pull`, the `data/` folder is filled with both raw and processed data divided into training, validation and test sets. In the `models/` folder we store a checkpoint with a trained model. A source code folder in our case has a name `ml_ops_dog_breeds/`. In there we have scripts for training and predictions, config files specifying hyperparameters and model parameters, folder `ml_ops_dog_breeds/data/` with scripts processing the raw data, and folder `ml_ops_dog_breeds/models/` with script containing the model class. We also added a new folder there, called `ml_ops_dog_breeds/api/`, that contains scripts with `FastAPI` application. We have filled folder dockerfiles with separate files for training, inference and api. In the folder `tests/` we added 3 scripts for testing the data, model and training. We also have `.github/workflows/` files that provides github actions with 2 workflows. Besides that we have a few files in the root directory, such as `requirements*.txt` files, `cloudbuild.yaml` or `pre-commit` file.
 
 ### Question 6
 
