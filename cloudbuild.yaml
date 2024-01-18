@@ -1,4 +1,8 @@
 steps:
+    - name: gcr.io/cloud-builders/gsutil
+      args: ['cp', 'gs://mlops-project-model-mk/models/epoch=29-step=3840.ckpt', 'models/epoch=29-step=3840.ckpt']
+    - name: gcr.io/cloud-builders/gsutil
+      args: ['cp', 'gs://mlops-project-model-mk/data/processed/label_encoder.pkl', 'data/processed/label_encoder.pkl']
     - name: 'gcr.io/cloud-builders/docker'
       args: ['build', '-t', 'gcr.io/ml-ops-dog-breeds/dog_breeds_api', '-f', 'dockerfiles/api.dockerfile', '.']
     - name: 'gcr.io/cloud-builders/docker'
