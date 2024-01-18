@@ -105,7 +105,7 @@ end of the project.
 >
 > Answer:
 
-```75```
+75
 
 ### Question 2
 > **Enter the study number for each member in the group**
@@ -116,7 +116,7 @@ end of the project.
 >
 > Answer:
 
-```s223322, s230241, s222887, ...```
+s223322, s230241, s222887, ...
 
 ### Question 3
 > **What framework did you choose to work with and did it help you complete the project?**
@@ -129,7 +129,7 @@ end of the project.
 >
 > Answer:
 
-```We used third-party framework TIMM in our project. First, we loaded a pretrained resnet18 model from it (finally changed to resnet50) and modified it's final classification layer to fine-tune the model using our own dataset. We also LabelSmoothingCrossEntropy from timm.loss.cross_entropy as our loss function that, according to documentation, is similar to NLL, but, as the name suggests, includes label smoothing, that takes into account the fact that there might be some incorrect labels in the dataset. For configuring the optimization process we used create_optimizer_v2 function from timm.optim.optim_factory with NAdamW as an optimizer.```
+We used third-party framework TIMM in our project. First, we loaded a pretrained resnet18 model from it (finally changed to resnet50) and modified it's final classification layer to fine-tune the model using our own dataset. We also LabelSmoothingCrossEntropy from timm.loss.cross_entropy as our loss function that, according to documentation, is similar to NLL, but, as the name suggests, includes label smoothing, that takes into account the fact that there might be some incorrect labels in the dataset. For configuring the optimization process we used create_optimizer_v2 function from timm.optim.optim_factory with NAdamW as an optimizer.
 
 ## Coding environment
 
@@ -148,7 +148,14 @@ end of the project.
 >
 > Answer:
 
---- question 4 fill here ---
+We were using conda environments to manage the dependencies. We created a `requirements.txt` file to store the dependencies, as well as `requirements_api.txt` for to store requirements of API and model deployment. We used `pipreqs` module for auto-generation of the dependencies. We also used `pyproject.toml` to describe project metadata, linked the `requirements.txt` file there, specified python version and configured `ruff` options in it. To get a complete copy of the environment, the following commands would have to be run:
+```
+git clone https://github.com/hrapek/ml_ops_dog_breeds.git
+cd ml_ops_dog_breeds
+conda create --name dog_breeds_env python=3.11.5
+pip install .
+dvc pull
+```
 
 ### Question 5
 
