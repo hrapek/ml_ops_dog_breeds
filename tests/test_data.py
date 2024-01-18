@@ -1,7 +1,7 @@
 import os
 import torch
 import pytest
-from tests import _PATH_DATA
+from __init__ import _PATH_DATA
 from ml_ops_dog_breeds.data.dataset import DogBreedsDataModule
 
 
@@ -27,6 +27,7 @@ class TestData:
 
         """
         processed_data_path = os.path.join(_PATH_DATA, 'processed')
+        print(processed_data_path)
         train_dataset = torch.load(os.path.join(processed_data_path, 'train_data.pt'))
         val_dataset = torch.load(os.path.join(processed_data_path, 'val_data.pt'))
         test_dataset = torch.load(os.path.join(processed_data_path, 'test_data.pt'))
