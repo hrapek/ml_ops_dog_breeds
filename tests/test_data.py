@@ -33,7 +33,8 @@ class TestData:
         test_dataset = torch.load(os.path.join(processed_data_path, 'test_data.pt'))
         return train_dataset, val_dataset, test_dataset
 
-    @pytest.mark.order(1)
+    #@pytest.mark.order(1)
+    @pytest.mark.initialization
     def test_create_dataset(self):
         """Test the creation of the DogBreedsDataModule."""
         DogBreedsDataModule().setup()
