@@ -5,8 +5,6 @@ import torch
 import joblib
 import click
 
-# TODO: figure out how to load models, lighting saves model checkpoint but with weird names (how to make it easier?)
-
 
 @click.group()
 def cli():
@@ -18,6 +16,17 @@ def cli():
 @click.option('--checkpoint_path', default='models/epoch=29-step=3840.ckpt', help='learning rate to use for training')
 @click.option('--image_path', default='data/predictions/dog.jpg', help='Image used for predictions')
 def predict(checkpoint_path, image_path):
+    """Predict the dog breed from an input image using a trained neural network.
+
+    Args:
+        checkpoint_path (str): Path to the model checkpoint file (default: 'models/epoch=29-step=3840.ckpt').
+        image_path (str): Path to the image used for predictions (default: 'data/predictions/dog.jpg').
+
+    Returns:
+        str: Predicted dog breed label.
+
+    """
+    
     # data
     data = DogBreedsDataModule()
 
