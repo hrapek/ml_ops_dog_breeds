@@ -129,7 +129,7 @@ s223322, s230241, s222887, s232050
 >
 > Answer:
 
-We used third-party framework TIMM in our project. First, we loaded a pretrained resnet18 model from it (finally changed to resnet50) and modified it's final classification layer to fine-tune the model using our own dataset. We also LabelSmoothingCrossEntropy from timm.loss.cross_entropy as our loss function that, according to documentation, is similar to NLL, but, as the name suggests, includes label smoothing, that takes into account the fact that there might be some incorrect labels in the dataset. For configuring the optimization process we used create_optimizer_v2 function from timm.optim.optim_factory with NAdamW as an optimizer.
+We used the third-party framework TIMM in our project. First, we loaded a pretrained resnet18 model from it (finally changed to resnet50) and modified it's final classification layer to fine-tune the model using our own dataset. We also used LabelSmoothingCrossEntropy from timm.loss.cross_entropy as our loss function which, according to documentation, is similar to NLL, but, as the name suggests, includes label smoothing, that takes the fact into account that there might be some incorrect labels in the dataset. For configuring the optimization process we used create_optimizer_v2 function from timm.optim.optim_factory with NAdamW as an optimizer.
 
 ## Coding environment
 
@@ -245,7 +245,8 @@ We used `cookiecutter` template from our project. When using `dvc pull`, the `da
 >
 > Answer:
 
---- question 10 fill here ---
+We did use DVC in this project. It was used for the raw data to provide a way we could have the data in a cloud storage that we have control over (in contrast to a direct import from keggle) and can still separate from the code and github.
+TODO: longer
 
 ### Question 11
 
@@ -261,7 +262,8 @@ We used `cookiecutter` template from our project. When using `dvc pull`, the `da
 >
 > Answer:
 
---- question 11 fill here ---
+We are testing on linux, mac and windows. We use caching for the dependencies and for the data pulling.
+TODO: longer
 
 ## Running code and tracking experiments
 
@@ -387,8 +389,8 @@ We used following services for our project:
 > **You can take inspiration from [this figure](figures/bucket.png).**
 >
 > Answer:
-
---- question 19 fill here ---
+![GCP Bucket Screenshot](figures/ml_ops_group_75_data_bucket.png)
+[GCP Bucket Screenshot (Link to File)](figures/ml_ops_group_75_data_bucket.png)
 
 ### Question 20
 
@@ -486,7 +488,8 @@ We used following services for our project:
 >
 > Answer:
 
---- question 26 fill here ---
+One of the struggles in this project was bugfixing, mostly in code for or interaction with other systems for the ML Ops(e.g. DVC, github actions).
+TODO: longer
 
 ### Question 27
 
@@ -503,4 +506,21 @@ We used following services for our project:
 >
 > Answer:
 
---- question 27 fill here ---
+All members contributed overall in sum equally to multiple areas in this project. In the following we will list main areas each person worked on:
+
+s223322
+
+s230241
+
+s222887
+
+s232050 (Mike) worked on github actions and testing workflows, especially in the area of data pulling and caching as well as bugfixing. Additionally he worked on parts of this report.
+
+
+|Student    |Contribution     |
+|:----------|----------------:|
+|s223322    | 25 %            |
+|s230241    | 25 %            |
+|s222887    | 25 %            |
+|s232050    | 25 %            |
+|Sum        | 100 %
