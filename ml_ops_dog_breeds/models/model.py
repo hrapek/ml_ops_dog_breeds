@@ -1,6 +1,6 @@
 import torch
 import timm
-from timm.optim.optim_factory import create_optimizer
+from timm.optim.optim_factory import create_optimizer_v2
 from timm.loss.cross_entropy import LabelSmoothingCrossEntropy
 from torch import nn
 from pytorch_lightning import LightningModule
@@ -75,7 +75,7 @@ class MyNeuralNet(LightningModule):
         return metrics
 
     def configure_optimizers(self):
-        return create_optimizer(self.base_model.fc.parameters(), lr=self.lr, opt='nadamw', weight_decay=1e-4)
+        return create_optimizer_v2(self.base_model.fc.parameters(), lr=self.lr, opt='nadamw', weight_decay=1e-4)
 
 
 if __name__ == '__main__':
