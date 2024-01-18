@@ -327,7 +327,7 @@ For managing experiments configuration we decided to use `hydra` and config file
 >
 > Answer:
 
---- question 15 fill here ---
+To make sure that our code is reproducible we developed three dockerfiles: one for training, one for inference and one for api (deployment). For example, to run the deployment dockerfile, we first need to build an image using `docker build -t dog_breeds_fastapi_app -f dockerfiles/api.dockerfile .` and then, to run it, we need the following command: docker run -p 8080:8080 dog_breeds_fastapi_app. It's important to specify the port number when running a deployment docker image. Here's a link to dockerfile on github: [link](https://github.com/hrapek/ml_ops_dog_breeds/blob/main/dockerfiles/api.dockerfile). This dockerfile is also build in Google Cloud Build whenever there are new pushes to main branch and then deployed on Cloud Run.
 
 ### Question 16
 
