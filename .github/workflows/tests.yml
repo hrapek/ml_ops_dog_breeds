@@ -63,7 +63,7 @@ jobs:
         # dvc remote add -d remote_storage gs://ml_ops_group_75_data_bucket/
         dvc status
         dvc data status
-        dvc pull
+        # dvc pull
 
     - name: Test with pytest
       run: |
