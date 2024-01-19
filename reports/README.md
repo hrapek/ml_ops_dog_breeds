@@ -475,6 +475,8 @@ TODO Cloud deployment
 
 Samy ended up using 13€ worth of credits on the project, using a storage bucket and the compute engine service. The compute engine service is way more expensive than the data storage.
 
+Mike used 0 € worth of credits, because he used the infrastructure provided by others.
+
 TODO other members
 
 ## Overall discussion of project
@@ -520,7 +522,7 @@ TODO: longer
 > Answer:
 
 One of the struggles in this project was bugfixing, mostly in code for or interaction with other systems for the ML Ops(e.g. DVC, github actions).
-In particular we had some issues with DVC which did not work for all group members when using drive, which takes time pulling data and had some bugs such as nto stopping running even though all data has been pushed. 
+In particular we had some issues with DVC which did not work for all group members when using drive, which takes time pulling data and had some bugs such as nto stopping running even though all data has been pushed.
 Implementing the custom handler for torchserve was a bit more complex than expected because of some lacking documentation.
 
 ### Question 27
