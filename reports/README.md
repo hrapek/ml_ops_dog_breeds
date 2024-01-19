@@ -324,8 +324,8 @@ We ensured the reproducibiity of our experiments by loging data to weight and bi
 >
 > Answer:
 
-![A WandB run](figures/wand_run.png)
-![A WandB two runs](figures/wand_two_runs.png)
+![A WandB run](figures/wandb_run.png)
+![A WandB two runs](figures/wandb_two_runs.png)
 
 ### Question 15
 
