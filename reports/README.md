@@ -129,7 +129,7 @@ s223322, s230241, s222887, s232050
 >
 > Answer:
 
-We used the third-party framework TIMM in our project. First, we loaded a pretrained resnet18 model from it (finally changed to resnet50) and modified its final classification layer to fine-tune the model using our own dataset. We also experimented with using `LabelSmoothingCrossEntropy` from `timm.loss.cross_entropy` as our loss function which, according to documentation, is similar to NLL, but, as the name suggests, includes label smoothing, that takes the fact into account that there might be some incorrect labels in the dataset. For configuring the optimization process we used the `create_optimizer_v2` function from `timm.optim.optim_factory` with `NAdamW` as an optimizer.
+In the project we used the third-party framework TIMM in our project. First, we loaded a pretrained resnet18 model from it (finally changed to resnet50) and modified its final classification layer to fine-tune the model using our own dataset. We also experimented with using `LabelSmoothingCrossEntropy` from `timm.loss.cross_entropy` as our loss function which, according to documentation, is similar to NLL, but, as the name suggests, includes label smoothing, that takes the fact into account that there might be some incorrect labels in the dataset. For configuring the optimization process we used the `create_optimizer_v2` function from `timm.optim.optim_factory` with `NAdamW` as an optimizer.
 
 ## Coding environment
 
@@ -221,7 +221,7 @@ Finally, regarding training, we test the gradient computation.
 >
 > Answer:
 
-The total coverage of our tests is 85% which seems to be a decent result. The least covered part of our project is `model.py` script for creating model class in which we scored 49%. Covering 100% of the code certainly does not mean that the code is error free. It would only mean that the tests are applied on the whole code base but some of the issues may not be caught by them as they are wrote to check specific things. Nevertheless, the coverage is still a good indicator of the quality of the code. We just should be mindful when we analyze those results.
+The total coverage of our tests is 85% which seems to be a decent result. The least covered part of our project is `model.py` script for creating model class in which we scored 49%. Covering 100% of the code certainly does not mean that the code is error free. It would only mean that the tests are applied on the whole code base but some of the issues may not be caught by them as they are written to check specific things. Nevertheless, the coverage is still a good indicator of the quality of the code. We just should be mindful when we analyze those results.
 
 ### Question 9
 
@@ -270,7 +270,7 @@ In our case we did not really make use of the version control aspect provided by
 >
 > Answer:
 
-Our CI cosnsists of pre-commit and Github Actions modules. At pre-commit stage we are using several hooks checking if the code is nice and clean in terms of syntax, such as trailing white spaces, changing double quotes to single quotes or making sure that the dependencies in requirements files are in order. Github Actions part consists of two test configs, codecheck.yml and tests.yml. Both are executed on all 3 operation systems (macos, windows and ubuntu). The former runs `ruff` to check and format code tackling among others linting issues. The latter utlizies `pytest` to run 9 tests wrote by us to check data, model and training. We check things like shapes of the data, make sure that the normalization is correct, or that the forward pass of training does not throw any errors. All the test are run on python version 3.11.5 and we haven't included any other versions. We use caching for the dependencies and for the data pulling to increase the testing speed - otherwise it can take even up to two hours. Here is an example of a triggered workflow that checks code quality: [link](https://github.com/hrapek/ml_ops_dog_breeds/actions/runs/7588602092)
+Our CI cosnsits of pre-commit and Github Actions modules. At pre-commit stage we are using several hooks checking if the code is nice and clean in terms of syntax. The Github Actions part consists of two test configs, `codecheck.yml` and `tests.yml`. Both are executed on all 3 operation systems (windows, linux and mac). The former workflow runs `ruff` to check and format code tackling among others linting issues. The latter utlizies `pytest` to run 9 tests wrote by us to check data, model and training. We check things like shapes of the data, make sure that the normalization is correct, or that the forward pass of training does not throw any errors. All the test are run on python version 3.11.5 and we haven't included any other versions. We use caching for the dependencies and for the data pulling to increase the testing speed - otherwise it can take even up to two hours. Here is an example of a triggered workflow that checks code quality: [link](https://github.com/hrapek/ml_ops_dog_breeds/actions/runs/7588602092)
 
 ## Running code and tracking experiments
 
@@ -304,7 +304,7 @@ For managing experiments configuration we decided to use `hydra` and config file
 >
 > Answer:
 
-We ensured the reproducibiity of our experiments by loging data to weight and biases which could later be inspected and compared to other runs. There we can of course also inspect things like training and validation accuracies and compare the results for different experiments. We save model checkpoints for each training experiment and using hydra we stored the corresponding configuration for each of the experiment. When using hydra all the outputs all laso saved locally to the `outputs` folder, ensuring that we don't lose parameters for any experiments.
+We ensured the reproducibiity of our experiments by loging data to weight and biases which could later be inspected and compared to other runs. There we can of course also inspect things like training and validation accuracies and compare the results for different experiments. We save model checkpoints for each training experiment and with hydra we store the corresponding configuration for each of the experiment. When using hydra all the outputs all laso saved locally to the `outputs` folder, ensuring that we don't lose parameters for any experiments.
 
 ### Question 14
 
@@ -472,7 +472,7 @@ We did implement some monitoring - but maybe not the the extent we wanted to. We
 
 Samy (s222887) ended up using 13€ worth of credits on the project, using a storage bucket and the compute engine service. The compute engine service is way more expensive than the data storage.
 
-Mike (s232050) used 0 € worth of credits, because he used the infrastructure provided by others.
+Mike (s232050) used 0 € worth of credits for this project directly, because he used the infrastructure provided by others.
 
 Malgorzata (s223322) used 2.41$ worth of credits. Most of it was used by experiments within Compute Engine, the rest was used by Storage Bucket and a bit by Cloud Run.
 
@@ -549,7 +549,7 @@ s230241 model, data and training script structure; CI setup; docker for cloud de
 
 s222887 data setup and processing scripts, local deployment with torchserve, model training, work on model class and training script, unittests
 
-s232050 (Mike) worked on github actions and testing workflows, especially in the area of data pulling and caching as well as bugfixing. Additionally he worked on parts of this report.
+s232050 worked on the continuous integration with github actions and testing workflows, especially in the area of data pulling and caching as well as bugfixing. Additionally he worked on parts of this report.
 
 
 |Student    |Contribution     |
