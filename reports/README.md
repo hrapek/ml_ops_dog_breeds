@@ -523,6 +523,8 @@ TODO: longer
 One of the struggles in this project was bugfixing, mostly in code for or interaction with other systems for the ML Ops(e.g. DVC, github actions).
 In particular we had some issues with DVC which did not work for all group members when using drive, which takes time pulling data and had some bugs such as nto stopping running even though all data has been pushed.
 Implementing the custom handler for torchserve was a bit more complex than expected because of some lacking documentation.
+We also tried to conduct the training using Vertex AI, but we constantly had problems with authentication to wandb, and despite many attempts to solve them, we did not succeed, thus we only used Compute Engine in the project.
+We did struggle with running tests in github actions - they worked locally, but in Github Actions sometimes they showed errors, and sometimes they passed without problems - we spent a lot of time figuring out what was happening, but in the end we didn't manage to solve that. We suspected that's a problem with pulling data from dvc and caching them, but we didn't solve that.
 
 ### Question 27
 
@@ -541,7 +543,7 @@ Implementing the custom handler for torchserve was a bit more complex than expec
 
 All members contributed overall in sum equally to multiple areas in this project. In the following we will list main areas each person worked on:
 
-s223322
+s223322 initial model architecture and script for model class, script for inference, creating api and dockerfile for it, deploying the model in the cloud
 
 s230241
 
