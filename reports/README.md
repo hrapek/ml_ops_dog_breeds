@@ -421,8 +421,8 @@ We setup the machine, as described previously in question 4, by cloning the repo
 > **your project. You can take inspiration from [this figure](figures/build.png).**
 >
 > Answer:
-
---- question 21 fill here ---
+![GCP Cloud Build Screenshot](figures/cloud_build.png)
+[GCP Cloud Build Screenshot (Link to File)](figures/cloud_build.png)
 
 ### Question 22
 
@@ -476,7 +476,7 @@ Mike (s232050) used 0 € worth of credits, because he used the infrastructure p
 
 Malgorzata (s223322) used 2.41$ worth of credits. Most of it was used by experiments within Compute Engine, the rest was used by Storage Bucket and a bit by Cloud Run.
 
-TODO other members
+Mateusz (s230241) used 11.5$. Most of it was used for experimenting with models on Compute Engine, the rest used by Cloud Build for container purposes.
 
 ## Overall discussion of project
 
@@ -545,7 +545,7 @@ All members contributed overall in sum equally to multiple areas in this project
 
 s223322 initial model architecture and script for model class, script for inference, creating api and dockerfile for it, deploying the model in the cloud
 
-s230241
+s230241 model, data and training script structure; CI setup; docker for cloud deployment; a bit of model training; debugging; applying pep8 practicies; documenting code
 
 s222887 data setup and processing scripts, local deployment with torchserve, model training, work on model class and training script, unittests
 
