@@ -221,7 +221,7 @@ Finally, regarding training, we test the gradient computation.
 >
 > Answer:
 
-The total coverage of our tests is 85% which seems to be a decent result. The least covered part of our project is `model.py` script for creating model class in which we scored 49%. Covering 100% of the code certainly does not mean that the code is error free. It would only mean that the tests are applied on the whole code base but some of the issues may not be caught by them as they are wrote to check specific things.
+The total coverage of our tests is 85% which seems to be a decent result. The least covered part of our project is `model.py` script for creating model class in which we scored 49%. Covering 100% of the code certainly does not mean that the code is error free. It would only mean that the tests are applied on the whole code base but some of the issues may not be caught by them as they are wrote to check specific things. Nevertheless, the coverage is still a good indicator of the quality of the code. We just should be mindful when we analyze those results.
 
 ### Question 9
 
@@ -270,7 +270,7 @@ In our case we did not really make use of the version control aspect provided by
 >
 > Answer:
 
-Our CI cosnsits of pre-commit and Github Actions modules. At pre-commit stage we are using several hooks checking if the code is nice and clean in terms of syntax. Github Actions part consists of two test configs, codecheck.yml and tests.yml. Both are executed on all 3 operation systems. The former runs `ruff` to check and format code tackling among others linting issues. The latter utlizies `pytest` to run 9 tests wrote by us to check data, model and training. All the test are run on python version 3.11.5 and we haven't included any other versions. We use caching for the dependencies and for the data pulling.
+Our CI cosnsists of pre-commit and Github Actions modules. At pre-commit stage we are using several hooks checking if the code is nice and clean in terms of syntax, such as trailing white spaces, changing double quotes to single quotes or making sure that the dependencies in requirements files are in order. Github Actions part consists of two test configs, codecheck.yml and tests.yml. Both are executed on all 3 operation systems (macos, windows and ubuntu). The former runs `ruff` to check and format code tackling among others linting issues. The latter utlizies `pytest` to run 9 tests wrote by us to check data, model and training. We check things like shapes of the data, make sure that the normalization is correct, or that the forward pass of training does not throw any errors. All the test are run on python version 3.11.5 and we haven't included any other versions. We use caching for the dependencies and for the data pulling to increase the testing speed - otherwise it can take even up to two hours. Here is an example of a triggered workflow that checks code quality: [link](https://github.com/hrapek/ml_ops_dog_breeds/actions/runs/7588602092)
 
 ## Running code and tracking experiments
 
@@ -304,7 +304,7 @@ For managing experiments configuration we decided to use `hydra` and config file
 >
 > Answer:
 
-We ensured the reproducibiity of our experiments by loging data to weight and biases which could later be inspected and compared to other runs. We save model checkpoints for each training experiment and using hydra we stored the corresponding configuration for each of the experiment.
+We ensured the reproducibiity of our experiments by loging data to weight and biases which could later be inspected and compared to other runs. There we can of course also inspect things like training and validation accuracies and compare the results for different experiments. We save model checkpoints for each training experiment and using hydra we stored the corresponding configuration for each of the experiment. When using hydra all the outputs all laso saved locally to the `outputs` folder, ensuring that we don't lose parameters for any experiments.
 
 ### Question 14
 
@@ -326,7 +326,7 @@ We ensured the reproducibiity of our experiments by loging data to weight and bi
 
 The first figure shows an example run, we logged training and validation loss and accuracy.
 The second run shows a comparison between two runs.
-These metrics are important to see how the model is learning, especially since, for each run,  we save the model which acheived the lowest validation loss. They can be used to compare parameter and architecture choices.
+These metrics are important to see how the model is learning, especially since, for each run,  we save the model which achjeved the lowest validation loss. They can be used to compare parameter and architecture choices.
 
 ### Question 15
 
@@ -357,7 +357,7 @@ To make sure that our code is reproducible we developed three dockerfiles: one f
 > Answer:
 
 We did not have to perform any complex debugging while working on the project.
-However, we used memory profiling on our `make_dataset.py` script because of a high memory consumption. This allowed us to reduce the maximum memory usage of the data processing and saving method from 10GB to 2GB, which was particularly helpful when running the code on the cloud.
+However, we used memory profiling on our `make_dataset.py` script because of a high memory consumption. This allowed us to reduce the maximum memory usage of the data processing and saving method from 10GB to 2GB, which was particularly helpful when running the code on the cloud. We also had to perform quite a lot of debugging when creating dockerfiles, especially regarding to paths. We also had a few bugs in our model code that we did not notice at first, for example we wanted to use a pretrained model, but we ended up training the whole model anyway and we had to fix that.
 
 ## Working in the cloud
 
@@ -394,8 +394,8 @@ We used following services for our project:
 >
 > Answer:
 
-We used the compute engine for training. We chose the n1 machines, containing a GPU, 2 CPU cores and varied the ram amount up to 15GB depending on the task.
-We setup the machine, as described previously in question 4, by cloning the repository, pulling the data and installing dependencies.
+We used the compute engine for training our model. We chose the n1 machines, containing a GPU, 2 CPU cores and varied the ram amount up to 15GB depending on the task.
+We set up the machine, as described previously in question 4, by cloning the repository, pulling the data from storage bucket and installing all of the needed dependencies.
 
 ### Question 19
 
