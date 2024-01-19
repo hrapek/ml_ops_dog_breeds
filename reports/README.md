@@ -327,6 +327,10 @@ We ensured the reproducibiity of our experiments by loging data to weight and bi
 ![A WandB run](figures/wandb_run.png)
 ![A WandB two runs](figures/wandb_two_runs.png)
 
+The first figure shows an example run, we logged training and validation loss and accuracy.
+The second run shows a comparison between two runs.
+These metrics are important to see how the model is learning, especially since, for each run,  we save the model which acheived the lowest validation loss. They can be used to compare parameter and architecture choices.
+
 ### Question 15
 
 > **Docker is an important tool for creating containerized applications. Explain how you used docker in your**
@@ -394,7 +398,7 @@ We used following services for our project:
 > Answer:
 
 We used the compute engine for training. We chose the n1 machines, containing a GPU, 2 CPU cores and varied the ram amount up to 15GB depending on the task.
-We setup the machine, as described previously, by cloning the repository, pulling the data and installing dependencies.
+We setup the machine, as described previously in question 4, by cloning the repository, pulling the data and installing dependencies.
 
 ### Question 19
 
@@ -469,7 +473,9 @@ TODO Cloud deployment
 >
 > Answer:
 
---- question 24 fill here ---
+Samy ended up using 13€ worth of credits on the project, using a storage bucket and the compute engine service. The compute engine service is way more expensive than the data storage.
+
+TODO other members
 
 ## Overall discussion of project
 
@@ -505,7 +511,8 @@ TODO Cloud deployment
 > Answer:
 
 One of the struggles in this project was bugfixing, mostly in code for or interaction with other systems for the ML Ops(e.g. DVC, github actions).
-TODO: longer
+In particular we had some issues with DVC which did not work for all group members when using drive, which takes time pulling data and had some bugs such as nto stopping running even though all data has been pushed. 
+Implementing the custom handler for torchserve was a bit more complex than expected because of some lacking documentation.
 
 ### Question 27
 
