@@ -67,6 +67,7 @@ jobs:
     - name: Initialize tests with pytest
       run: |
         pip install pytest
+        pip install protobuf
         pytest -m initialization
 
     - name: Test with pytest
