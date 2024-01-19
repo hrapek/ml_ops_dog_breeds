@@ -500,13 +500,13 @@ Mateusz (s230241) used 11.5$. Most of it was used for experimenting with models 
 ![Architecture](figures/Architecture.png)
 [Architecture (Link to File)](figures/Architecture.png)
 
-The starting point of our architecture is our local setup, where, as described earlier, one first have to create a proper environment and install all of the required depenencies. We store the data on the Google Cloud Bucket Storage integrated with dvc - in order to work on the project, one first has to pulll the data.
+The starting point of our architecture is our local setup, where, as described earlier, one first have to create a proper environment and install all of the required depenencies. We store the data on the Google Cloud Bucket Storage integrated with dvc - in order to work on the project, one first has to pull the data.
 
 The training was done in the GCP Compute Engine's Virtual Machine. Whenever we train the model, the results (training and validation accuracies) are saved on Weights & Biases platform. We also use hydra to store model experiment configuration. Both of these are also logged locally on VM.
 
 Whenever we push our code to Github repo, first we use pre-commit that checks our code quality and fixes any problems. In github repo we have set up Github Actions that run tests regarding the data, model and training as well as codecheck including `ruff`.
 
-Every push to the repo runs a trigger in GCP that buils a docker image containing application with FastAPI. Then, the image is pushed to the Google Container Registry, and then a service in Google Cloud Run is set up that deploys our model in the cloud. It also has a monitoring set up allowing to check availability and latency.
+Every push to the repo runs a trigger in GCP that buils a docker image containing the application with FastAPI. Then, the image is pushed to the Google Container Registry, and then a service in Google Cloud Run is set up that deploys our model in the cloud. It also has a monitoring set up allowing to check availability and latency.
 
 
 
