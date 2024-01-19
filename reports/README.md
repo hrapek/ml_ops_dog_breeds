@@ -323,10 +323,15 @@ We ensured the reproducibiity of our experiments by loging data to weight and bi
 
 ![A WandB run](figures/wandb_run.png)
 ![A WandB two runs](figures/wandb_two_runs.png)
+![A WandB all experiements](figures/wandb.png)
 
-The first figure shows an example run, we logged training and validation loss and accuracy.
-The second run shows a comparison between two runs.
-These metrics are important to see how the model is learning, especially since, for each run,  we save the model which achjeved the lowest validation loss. They can be used to compare parameter and architecture choices.
+The first figure shows an example run, we logged training and validation loss and accuracy. Both of these are important because comparing those metrics can help detect overfitting. In case training accuracy would be significantly higher than validation it could indicate that the model is not generalizing well.
+
+The second run shows a comparison between two runs which is helpful when deciding which model is performing better. The plots also show the evolution of losses and accuracies with every epoch. It indicates how fast the models are converging and can suggests if further training is needed in order to obtain optimal performance level.
+
+Last plot shows all of the expriments together. It helps detect similar things as in 1 to 1 comparison but for all the runs together.
+
+All those tracked metrics act as a source of knowledge on the currently trained models, help come up with ideas for different model architectures and ultimately choose the best one. WandB also help us store all the model checkpoints so we can retrieve the model state from any given point for any given model architecture.
 
 ### Question 15
 
