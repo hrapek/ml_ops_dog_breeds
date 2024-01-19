@@ -182,9 +182,9 @@ We used the `cookiecutter` template for our project. When using `dvc pull`, the 
 >
 > Answer:
 
-We use pre-commit to enforce some format rules.
+We use pre-commit to enforce some format rules, using various hooks and also calling `ruff`, in order to ensure compliance with pep8.
 
-Especially in larger projects it is very important to have standards for formating and other structures so it is easier for someone to look for information in other peoples code and ensure that code style is consistent across the repo. Additionally, for some applications it it necessary to have the same names or data structures between systems (e.g. apis).
+Especially in larger projects and large teams, it is very important to have standards for formating and other structures so it is easier for someone to look for information in other peoples code and ensure that code style is consistent across the entire repo when many people are contributiing, and various rules should be followed.
 
 ## Version control
 
@@ -237,7 +237,7 @@ Finally, regarding training, we test the gradient computation.
 > Answer:
 
 We only used branches in a very limited capacity, mostly because possible overhead in this project might have been bigger that communicating which area each person is working on, because they were generally seperate.
-In larger or more complex project, a seperate branch for each feature getting implemented would be more suited and pull requests would allow other group members to check the code before merging it, ensuring the main branch is always clean.
+In larger or more complex project, a seperate branch for each feature getting implemented would be more suited and pull requests would allow other group members to check the code before merging it, ensuring the main branch is always clean. In our case, we used branches to make some changes to the model, training scripts and configs, which we could then pull and test from the compute engine, before merging it to main.
 
 ### Question 10
 
@@ -254,8 +254,7 @@ In larger or more complex project, a seperate branch for each feature getting im
 
 We did use DVC in this project. It was used for the raw data to provide a way we could have the data in a cloud storage that we have control over (in contrast to a direct import from keggle) and can still separate from the code and github.
 It also allowed us to push model checkpoints after training.
-
-TODO: longer
+In our case we did not really make use of the version control aspect provided by dvc since we did not change the data while working on the project. However, if we were to store processed images after applying transformations, this aspect could be particularly useful when testing different transformations.
 
 ### Question 11
 
@@ -272,7 +271,7 @@ TODO: longer
 > Answer:
 
 We used `ruff` for linting and `pytest` for unittesting. We setup pre-commit to run  serveral checks and `ruff`.
-Using github actions, we are testing on linux, mac and windows. We use caching for the dependencies and for the data pulling.
+In addition, using github actions, we are running our unittests, testing on linux, mac and windows. We use caching for the dependencies and for the data pulling.
 
 TODO: longer
 
@@ -308,7 +307,7 @@ For managing experiments configuration we decided to use `hydra` and config file
 >
 > Answer:
 
---- question 13 fill here ---
+We ensured the reproducibiity of our experiments by loging data to weight and biases which could later be inspected and compared to other runs. We save model checkpoints for each training experiment and using hydra we stored the crresponding configuration for each of the experiment.
 
 ### Question 14
 
