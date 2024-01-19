@@ -31,6 +31,7 @@ jobs:
 
     - name: Cache dependencies
       uses: actions/cache@v3
+      if: 1 == 2
       with:
         path: ${{ steps.pip-cache.outputs.dir }}
         key: ${{ matrix.os }}-py${{ matrix.python-version }}-pt${{ matrix.pytorch-version }}-pip-${{ hashFiles('**/requirements.txt') }}
@@ -67,7 +68,7 @@ jobs:
     - name: Initialize tests with pytest
       run: |
         pip install pytest
-        pip install protobuf
+        # pip install protobuf
         pytest -m initialization
 
     - name: Test with pytest
