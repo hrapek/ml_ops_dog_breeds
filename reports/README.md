@@ -485,7 +485,16 @@ We used following services for our project:
 >
 > Answer:
 
---- question 25 fill here ---
+![Architecture](figures/Architecture.png)
+[Architecture (Link to File)](figures/Architecture.png)
+
+The data used for the project can be pulled from the cloud via DVC.
+
+After uploading code to GitHub (including a pre-commit, committing and pushing), workflows automatically test it in form of a codecheck and tests of the functionality.
+
+TODO: correct and add to architecture
+TODO: longer
+
 
 ### Question 26
 

@@ -7,3 +7,4 @@ build
 wandb
 lightning_logs
 /models
+reports/figures/~$Architecture.pptx
