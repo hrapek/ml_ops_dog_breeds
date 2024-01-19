@@ -221,7 +221,7 @@ Finally, regarding training, we test the gradient computation.
 >
 > Answer:
 
---- question 8 fill here ---
+The total coverage of our tests is 85% which seems to be a decent result. The least covered part of our project is `model.py` script for creating model class in which we scored 49%. Covering 100% of the code certainly does not mean that the code is error free. It would only mean that the tests are applied on the whole code base but some of the issues may not be caught by them as they are wrote to check specific things.
 
 ### Question 9
 
@@ -270,10 +270,7 @@ In our case we did not really make use of the version control aspect provided by
 >
 > Answer:
 
-We used `ruff` for linting and `pytest` for unittesting. We setup pre-commit to run  serveral checks and `ruff`.
-In addition, using github actions, we are running our unittests, testing on linux, mac and windows. We use caching for the dependencies and for the data pulling.
-
-TODO: longer
+Our CI cosnsits of pre-commit and Github Actions modules. At pre-commit stage we are using several hooks checking if the code is nice and clean in terms of syntax. Github Actions part consists of two test configs, codecheck.yml and tests.yml. Both are executed on all 3 operation systems. The former runs `ruff` to check and format code tackling among others linting issues. The latter utlizies `pytest` to run 9 tests wrote by us to check data, model and training. All the test are run on python version 3.11.5 and we haven't included any other versions. We use caching for the dependencies and for the data pulling.
 
 ## Running code and tracking experiments
 
@@ -307,7 +304,7 @@ For managing experiments configuration we decided to use `hydra` and config file
 >
 > Answer:
 
-We ensured the reproducibiity of our experiments by loging data to weight and biases which could later be inspected and compared to other runs. We save model checkpoints for each training experiment and using hydra we stored the crresponding configuration for each of the experiment.
+We ensured the reproducibiity of our experiments by loging data to weight and biases which could later be inspected and compared to other runs. We save model checkpoints for each training experiment and using hydra we stored the corresponding configuration for each of the experiment.
 
 ### Question 14
 
