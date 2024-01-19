@@ -413,7 +413,7 @@ We setup the machine, as described previously in question 4, by cloning the repo
 >
 > Answer:
 
---- question 20 fill here ---
+![my_image](figures/registry_question20.png)
 
 ### Question 21
 
