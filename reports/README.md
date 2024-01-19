@@ -129,7 +129,7 @@ s223322, s230241, s222887, s232050
 >
 > Answer:
 
-We used the third-party framework TIMM in our project. First, we loaded a pretrained resnet18 model from it (finally changed to resnet50) and modified its final classification layer to fine-tune the model using our own dataset. We also used `LabelSmoothingCrossEntropy` from `timm.loss.cross_entropy` as our loss function which, according to documentation, is similar to NLL, but, as the name suggests, includes label smoothing, that takes the fact into account that there might be some incorrect labels in the dataset. For configuring the optimization process we used the `create_optimizer_v2` function from `timm.optim.optim_factory` with `NAdamW` as an optimizer.
+We used the third-party framework TIMM in our project. First, we loaded a pretrained resnet18 model from it (finally changed to resnet50) and modified its final classification layer to fine-tune the model using our own dataset. We also experimented with using `LabelSmoothingCrossEntropy` from `timm.loss.cross_entropy` as our loss function which, according to documentation, is similar to NLL, but, as the name suggests, includes label smoothing, that takes the fact into account that there might be some incorrect labels in the dataset. For configuring the optimization process we used the `create_optimizer_v2` function from `timm.optim.optim_factory` with `NAdamW` as an optimizer.
 
 ## Coding environment
 
