@@ -440,8 +440,8 @@ We setup the machine, as described previously in question 4, by cloning the repo
 
 We deployed the model locally using torchserve. We used `torch.jit`, `torch-model-archiver` with a custom handler we implemented and passing-in
 our serialized label encoder along with the model to convert from model predictions to breed names.
+We also deployed our model in the cloud: once we just pushed a docker image built locally to the container registry and then started a service in the Google Cloud Run, the other time we created a trigger in GCP that results in building an API dockerfile every time new changes are pushed to main branch in github reposistory. Then this image is pushed to the Artifact Registry, and again, service is started in the Cloud Run - but this time everything happens automatically. To invoke the service user would have to call *`curl -X POST "https://dog-breeds-api-vf6mse4msq-ew.a.run.app/predict/" -H "accept: application/json" -H "Content-Type: multipart/form-data" -F file=@dog.jpg;type=image/jpg`*
 
-TODO Cloud deployment
 
 ### Question 23
 
@@ -456,7 +456,7 @@ TODO Cloud deployment
 >
 > Answer:
 
---- question 23 fill here ---
+We did implement some monitoring - but maybe not the the extent we wanted to. We implemented Availability that measure how many requests were successful within a calendar day, choosing 95% as our goal, and latency, that tells us how fast our model gave responses for users. It was also measured within a calendar day, and we set a goal to 90%. We chose a latency threshold to 3000ms, but unfortunately our model takes more time to load and make predictions, so we later found that it's too low and thus an error budget is 19.62%.
 
 ### Question 24
 
@@ -470,9 +470,11 @@ TODO Cloud deployment
 >
 > Answer:
 
-Samy ended up using 13€ worth of credits on the project, using a storage bucket and the compute engine service. The compute engine service is way more expensive than the data storage.
+Samy (s222887) ended up using 13€ worth of credits on the project, using a storage bucket and the compute engine service. The compute engine service is way more expensive than the data storage.
 
-Mike used 0 € worth of credits, because he used the infrastructure provided by others.
+Mike (s232050) used 0 € worth of credits, because he used the infrastructure provided by others.
+
+Malgorzata (s223322) used 2.41$ worth of credits. Most of it was used by experiments within Compute Engine, the rest was used by Storage Bucket and a bit by Cloud Run.
 
 TODO other members
 
