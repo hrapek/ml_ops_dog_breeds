@@ -58,7 +58,7 @@ end of the project.
 * [X] Add a model file and a training script and get that running
 * [X] Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
 * [X] Remember to comply with good coding practices (`pep8`) while doing the project
-* [ ] Do a bit of code typing and remember to document essential parts of your code
+* [X] Do a bit of code typing and remember to document essential parts of your code
 * [X] Setup version control for your data or part of your data
 * [X] Construct one or multiple docker files for your code
 * [X] Build the docker files locally and make sure they work as intended
@@ -77,10 +77,10 @@ end of the project.
 * [X] Calculate the coverage.
 * [X] Get some continuous integration running on the github repository
 * [X] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
-* [ ] Create a trigger workflow for automatically building your docker images
+* [X] Create a trigger workflow for automatically building your docker images
 * [X] Get your model training in GCP using either the Engine or Vertex AI
 * [X] Create a FastAPI application that can do inference using your model
-* [ ] If applicable, consider deploying the model locally using torchserve
+* [X] If applicable, consider deploying the model locally using torchserve
 * [X] Deploy your model in GCP using either Functions or Run as the backend
 
 ### Week 3
@@ -129,7 +129,7 @@ s223322, s230241, s222887, s232050
 >
 > Answer:
 
-We used the third-party framework TIMM in our project. First, we loaded a pretrained resnet18 model from it (finally changed to resnet50) and modified it's final classification layer to fine-tune the model using our own dataset. We also used LabelSmoothingCrossEntropy from timm.loss.cross_entropy as our loss function which, according to documentation, is similar to NLL, but, as the name suggests, includes label smoothing, that takes the fact into account that there might be some incorrect labels in the dataset. For configuring the optimization process we used create_optimizer_v2 function from timm.optim.optim_factory with NAdamW as an optimizer.
+We used the third-party framework TIMM in our project. First, we loaded a pretrained resnet18 model from it (finally changed to resnet50) and modified its final classification layer to fine-tune the model using our own dataset. We also used `LabelSmoothingCrossEntropy` from `timm.loss.cross_entropy` as our loss function which, according to documentation, is similar to NLL, but, as the name suggests, includes label smoothing, that takes the fact into account that there might be some incorrect labels in the dataset. For configuring the optimization process we used the `create_optimizer_v2` function from `timm.optim.optim_factory` with `NAdamW` as an optimizer.
 
 ## Coding environment
 
@@ -149,7 +149,8 @@ We used the third-party framework TIMM in our project. First, we loaded a pretra
 > Answer:
 
 We were using conda environments to manage the dependencies. We created a `requirements.txt` file to store the dependencies, as well as `requirements_api.txt` to store requirements of API and model deployment. Similarly, `requirements_dev.txt` and `requirements_tests.txt` include dependencies used for development and testing. We used `pipreqs` module for auto-generation of the dependencies. We also used `pyproject.toml` to describe project metadata, linked the `requirements.txt` file there, specified python version and configured `ruff` options in it. To get a complete copy of the environment, the following commands would have to be run:
-```
+
+```bash
 git clone https://github.com/hrapek/ml_ops_dog_breeds.git
 cd ml_ops_dog_breeds
 conda create --name dog_breeds_env python=3.11.5
@@ -170,7 +171,7 @@ dvc pull
 > *experiments.*
 > Answer:
 
-We used `cookiecutter` template from our project. When using `dvc pull`, the `data/` folder is filled with both raw and processed data divided into training, validation and test sets. In the `models/` folder we store a checkpoint with a trained model. A source code folder in our case has a name `ml_ops_dog_breeds/`. In there we have scripts for training and predictions, config files specifying hyperparameters and model parameters, folder `ml_ops_dog_breeds/data/` with scripts processing the raw data, and folder `ml_ops_dog_breeds/models/` with script containing the model class. We also added a new folder there, called `ml_ops_dog_breeds/api/`, that contains scripts with `FastAPI` application. We have filled folder dockerfiles with separate files for training, inference and api. In the folder `tests/` we added 3 scripts for testing the data, model and training. We also have `.github/workflows/` files that provides github actions with 2 workflows. Besides that we have a few files in the root directory, such as `requirements*.txt` files, `cloudbuild.yaml` or `pre-commit` file.
+We used the `cookiecutter` template for our project. When using `dvc pull`, the `data/` folder is filled with raw data. This data can then be used in `make_dataset.py` to generate the processed data,  divided into training, validation and test sets. In the `models/` folder we store a checkpoint with a trained model and user it as a `model_store` for torchserve. A source code folder in our case has a name `ml_ops_dog_breeds/`. In there we have scripts for training and predictions, torchserve custom handler and config files specifying hyperparameters and model parameters, folder `ml_ops_dog_breeds/data/` with scripts processing the raw data, and folder `ml_ops_dog_breeds/models/` with script containing the model class. We also added a new folder there, called `ml_ops_dog_breeds/api/`, that contains scripts with `FastAPI` application. We have filled folder dockerfiles with separate files for training, inference and api. In the folder `tests/` we added three scripts for testing the data, model and training. We also have `.github/workflows/` files that provides github actions with two workflows. Besides that we have a few files in the root directory, such as `requirements*.txt` files, `cloudbuild.yaml` or `pre-commit` file.
 
 ### Question 6
 
@@ -181,9 +182,9 @@ We used `cookiecutter` template from our project. When using `dvc pull`, the `da
 >
 > Answer:
 
-We use pre-commit to enforce some format rules.
+We use pre-commit to enforce some format rules, using various hooks and also calling `ruff`, in order to ensure compliance with pep8.
 
-Especially in larger projects it is very important to have standards for formating and other structures so it is easier for someone to look for information in other peoples code. Additionally, for some applications it it nessecary to have the same names or data structures between systems (e.g. api).
+Especially in larger projects and large teams, it is very important to have standards for formating and other structures so it is easier for someone to look for information in other peoples code and ensure that code style is consistent across the entire repo when many people are contributiing, and various rules should be followed.
 
 ## Version control
 
@@ -203,9 +204,9 @@ Especially in larger projects it is very important to have standards for formati
 > Answer:
 
 In the `tests/test_*.py` files we have implemented 8 tests in the areas data, model and training.
-For example, `test_data.py/test_num_samples` compares the number of samples in the dataset which got pulled via dvc to the total number of samples in the cloud storage, testing if all the data got pulled.
-
-TODO: longer
+Regarding data, we check that the processed data gets generated without any exception, we check the number of samples, the shape of the imagers and labels, the range of labels and the normalization of the data.
+Furthermore, regarding the model, we check that the forward pass does not throw exceptions, check the shape of model predictions and that the parameters of the model are floating point numbers.
+Finally, regarding training, we test the gradient computation.
 
 ### Question 8
 
@@ -236,10 +237,7 @@ TODO: longer
 > Answer:
 
 We only used branches in a very limited capacity, mostly because possible overhead in this project might have been bigger that communicating which area each person is working on, because they were generally seperate.
-
-In larger or more complex project, a seperate branch for each feature getting implemented could be used.
-
-TODO: longer
+In larger or more complex project, a seperate branch for each feature getting implemented would be more suited and pull requests would allow other group members to check the code before merging it, ensuring the main branch is always clean. In our case, we used branches to make some changes to the model, training scripts and configs, which we could then pull and test from the compute engine, before merging it to main.
 
 ### Question 10
 
@@ -255,8 +253,8 @@ TODO: longer
 > Answer:
 
 We did use DVC in this project. It was used for the raw data to provide a way we could have the data in a cloud storage that we have control over (in contrast to a direct import from keggle) and can still separate from the code and github.
-
-TODO: longer
+It also allowed us to push model checkpoints after training.
+In our case we did not really make use of the version control aspect provided by dvc since we did not change the data while working on the project. However, if we were to store processed images after applying transformations, this aspect could be particularly useful when testing different transformations.
 
 ### Question 11
 
@@ -272,7 +270,8 @@ TODO: longer
 >
 > Answer:
 
-We are testing on linux, mac and windows. We use caching for the dependencies and for the data pulling.
+We used `ruff` for linting and `pytest` for unittesting. We setup pre-commit to run  serveral checks and `ruff`.
+In addition, using github actions, we are running our unittests, testing on linux, mac and windows. We use caching for the dependencies and for the data pulling.
 
 TODO: longer
 
@@ -308,7 +307,7 @@ For managing experiments configuration we decided to use `hydra` and config file
 >
 > Answer:
 
---- question 13 fill here ---
+We ensured the reproducibiity of our experiments by loging data to weight and biases which could later be inspected and compared to other runs. We save model checkpoints for each training experiment and using hydra we stored the crresponding configuration for each of the experiment.
 
 ### Question 14
 
@@ -325,7 +324,12 @@ For managing experiments configuration we decided to use `hydra` and config file
 >
 > Answer:
 
---- question 14 fill here ---
+![A WandB run](figures/wandb_run.png)
+![A WandB two runs](figures/wandb_two_runs.png)
+
+The first figure shows an example run, we logged training and validation loss and accuracy.
+The second run shows a comparison between two runs.
+These metrics are important to see how the model is learning, especially since, for each run,  we save the model which acheived the lowest validation loss. They can be used to compare parameter and architecture choices.
 
 ### Question 15
 
@@ -355,7 +359,8 @@ To make sure that our code is reproducible we developed three dockerfiles: one f
 >
 > Answer:
 
---- question 16 fill here ---
+We did not have to perform any complex debugging while working on the project.
+However, we used memory profiling on our `make_dataset.py` script because of a high memory consumption. This allowed us to reduce the maximum memory usage of the data processing and saving method from 10GB to 2GB, which was particularly helpful when running the code on the cloud.
 
 ## Working in the cloud
 
@@ -392,7 +397,8 @@ We used following services for our project:
 >
 > Answer:
 
---- question 18 fill here ---
+We used the compute engine for training. We chose the n1 machines, containing a GPU, 2 CPU cores and varied the ram amount up to 15GB depending on the task.
+We setup the machine, as described previously in question 4, by cloning the repository, pulling the data and installing dependencies.
 
 ### Question 19
 
@@ -435,7 +441,10 @@ We used following services for our project:
 >
 > Answer:
 
---- question 22 fill here ---
+We deployed the model locally using torchserve. We used `torch.jit`, `torch-model-archiver` with a custom handler we implemented and passing-in
+our serialized label encoder along with the model to convert from model predictions to breed names.
+
+TODO Cloud deployment
 
 ### Question 23
 
@@ -464,7 +473,9 @@ We used following services for our project:
 >
 > Answer:
 
---- question 24 fill here ---
+Samy ended up using 13€ worth of credits on the project, using a storage bucket and the compute engine service. The compute engine service is way more expensive than the data storage.
+
+TODO other members
 
 ## Overall discussion of project
 
@@ -509,7 +520,8 @@ TODO: longer
 > Answer:
 
 One of the struggles in this project was bugfixing, mostly in code for or interaction with other systems for the ML Ops(e.g. DVC, github actions).
-TODO: longer
+In particular we had some issues with DVC which did not work for all group members when using drive, which takes time pulling data and had some bugs such as nto stopping running even though all data has been pushed. 
+Implementing the custom handler for torchserve was a bit more complex than expected because of some lacking documentation.
 
 ### Question 27
 
@@ -532,7 +544,7 @@ s223322
 
 s230241
 
-s222887
+s222887 data setup and processing scripts, local deployment with torchserve, model training, work on model class and training script, unittests
 
 s232050 (Mike) worked on github actions and testing workflows, especially in the area of data pulling and caching as well as bugfixing. Additionally he worked on parts of this report.
 
